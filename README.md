@@ -1,5 +1,5 @@
 # APCompPro24
-
+This is Oliver Gibbons portfolio for the 2023-24 AP computer programming course offered at Skyline. 
 ## Hangman clone
 
 A hangman clone in a command line environment.
