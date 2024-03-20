@@ -6,3 +6,5 @@ The code was uploaded to SRC and ReadMe.md was updated with a class diagram and 
 
 ### Individual project start Mar/17/2024
 This project will be the final for my AP Computer Programming course. This marks the start of the project and an update to the ReadMe.md. 
+
+Mar/20/2024 - class diagram created and added to "images" folder. ReadMe updated with a more inclusive description of the project. 
