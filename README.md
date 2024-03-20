@@ -15,4 +15,6 @@ A hangman clone in a command line environment.
 # Individual Project 
 This will be the final for the AP Computer Programming course. It will entail 30+ hours of work and will include advanced programming concepts. 
 
+The project is a tower defense game; the concepts being implemented include recursion, class hierarchy, multidimensional arrays, enhanced for loops, and more as the project develops.  
+
 ![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/indPro.png?raw=true) 
