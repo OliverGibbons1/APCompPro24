@@ -1,22 +1,22 @@
 class Button {
-  int x, y, w, h;
+  float x, y, width, height;
 
-  Button(int x, int y, int w, int h) {
+  Button(float x, float y, float width, float height) {
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.width = width;
+    this.height = height;
+  }
+
+  void display() {
+    rect(x, y, width, height);
   }
 
   boolean pressed() {
-    if (mouseX < x+w && mouseX > x && mouseY < y+h && mouseY > y && mousePressed) {
+    if (mouseX < x+width && mouseX > x && mouseY < y+height && mouseY > y && mousePressed) {
       return true;
     } else {
       return false;
     }
-  }
-
-  void display() {
-    rect(x, y, w, h);
   }
 }

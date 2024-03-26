@@ -4,12 +4,13 @@ class Map {
   PImage startScreen;
 
   Map () {
+    startScreen = loadImage("towerImages/startscreen.png");
     rows = 10;
     cols = 10;
   }
   void displayMap() {
-    startScreen = loadImage("images/bestStartScreen.png");
-//    startScreen.resize(640, 640);
+    image(startScreen, 0, 0);
+    startScreen.resize(640, 640);
   }
   void placeTower(int row, int cols, int towerType) {
   }
