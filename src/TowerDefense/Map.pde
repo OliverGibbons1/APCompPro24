@@ -1,10 +1,12 @@
 class Map {
   int [] [] grid;
   int rows, cols;
-  PImage startScreen;
+  PImage startScreen, endScreen, playScreen;
 
   Map () {
     startScreen = loadImage("towerImages/startscreen.png");
+    endScreen = loadImage("towerImages/endscreen.png");
+    //playScreen = loadImage("");
     rows = 10;
     cols = 10;
   }

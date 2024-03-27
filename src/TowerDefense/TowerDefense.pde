@@ -1,11 +1,12 @@
 //Oliver Gibbons | March 2024
-int money, round, health;
+int money, round, health, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton;
 JSONObject saveGame;
-boolean savedGame;
+boolean savedGame, play;
 int mapWidth = 640;
 int mapHeight = 640;
+ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 
 void setup() {
   m = new Map();
@@ -13,6 +14,8 @@ void setup() {
   health = 100;
   round = 0;
   money = 500;
+  enemyCount = 0;
+  play = false;
 
   saveGame = new JSONObject();
 
@@ -23,7 +26,7 @@ void setup() {
 }
 
 void draw() {
-
+  //General stuffs
   rectMode(CENTER);
   textMode(CENTER);
   textAlign(CENTER, CENTER);
@@ -35,7 +38,7 @@ void draw() {
   quitButton.display();
   loadGameButton.display();
   clearSaveButton.display();
-
+  //Starting buttons
   String s = "Start";
   String q = "Quit";
   String l = "Load Game";
@@ -49,9 +52,11 @@ void draw() {
   text(c, clearSaveButton.x, clearSaveButton.y);
   fill(0);
   if (startButton.pressed()) {
+    play = true;
     s = s.equals(i) ? i:s;
   }
   if (loadGameButton.pressed()) {
+    play = true;
     saveGame = loadJSONObject("data/new.json");
     savedGame = saveGame.getBoolean("savedGame");
     if (savedGame) {
@@ -69,9 +74,24 @@ void draw() {
   if (clearSaveButton.pressed()) {
     clearSave();
   }
+
+  //Count enemies passing x & game over logic
+  for (int j = 0; j < enemy.size(); j++) {
+    Enemy e = enemy.get(j);
+    if (e.passX()) {
+      enemyCount++;
+    }
+  }
+  if(checkGameOver()){
+  
+  }
 }
 boolean checkGameOver() {
-  return false;
+  if (enemyCount == 30) {
+    return true;
+  } else {
+    return false;
+  }
 }
 void saveGame() {
   savedGame = true;
