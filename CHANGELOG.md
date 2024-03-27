@@ -8,3 +8,5 @@ The code was uploaded to SRC and ReadMe.md was updated with a class diagram and 
 This project will be the final for my AP Computer Programming course. This marks the start of the project and an update to the ReadMe.md. 
 
 Mar/20/2024 - class diagram created and added to "images" folder. ReadMe updated with a more inclusive description of the project. 
+
+Mar/27/2024 - Start screen and GUI (start/quit/load game/ clear game) buttons added. Endgame defined. Startscreen and endscreen created. JSON file created for save/load/clear game save.  
