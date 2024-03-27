@@ -30,7 +30,7 @@ void draw() {
   rectMode(CENTER);
   textMode(CENTER);
   textAlign(CENTER, CENTER);
-  m.displayMap();
+  m.displaySSMap();
   noFill();
   stroke(0);
   strokeWeight(2);
@@ -83,7 +83,7 @@ void draw() {
     }
   }
   if(checkGameOver()){
-  
+  m.displayEndMap();
   }
 }
 boolean checkGameOver() {
