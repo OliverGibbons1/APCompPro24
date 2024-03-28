@@ -1,4 +1,13 @@
 //Oliver Gibbons | March 2024
+
+
+// TO DO:
+// Make buttons out of tower spots; figure out tower class hiearchy; make checks for tower placement;
+// make checks for enemy movement (recursive); make enemy movement; display enemy;
+// mostly tower and enemy, map set up
+// MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
+
+
 int money, round, health, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton;
@@ -51,6 +60,7 @@ void draw() {
   textSize(8);
   text(c, clearSaveButton.x, clearSaveButton.y);
   fill(0);
+
   if (startButton.pressed()) {
     play = true;
     s = s.equals(i) ? i:s;
@@ -65,7 +75,7 @@ void draw() {
       s = s.equals(i) ? i:s;
     } else {
       s = s.equals(i) ? i:s;
-      exit();
+      play = true;
     }
   }
   if (quitButton.pressed()) {
@@ -82,8 +92,13 @@ void draw() {
       enemyCount++;
     }
   }
-  if(checkGameOver()){
-  m.displayEndMap();
+  if (checkGameOver()) {
+    m.displayEndMap();
+  }
+
+  //Start of play
+  if (play) {
+    m.displayPlayMap();
   }
 }
 boolean checkGameOver() {
