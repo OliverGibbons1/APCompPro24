@@ -6,6 +6,7 @@
 // make checks for enemy movement (recursive); make enemy movement; display enemy;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
+// MAIN: floating box that displays player stats at grid [0] [c]; money, round, health, saveGame button?
 
 
 int money, round, health, enemyCount;
