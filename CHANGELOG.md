@@ -9,4 +9,4 @@ This project will be the final for my AP Computer Programming course. This marks
 
 Mar/20/2024 - class diagram created and added to "images" folder. ReadMe updated with a more inclusive description of the project. 
 
-Mar/27/2024 - Start screen and GUI (start/quit/load game/ clear game) buttons added. Endgame defined. Startscreen and endscreen created. JSON file created for save/load/clear game save.  
+Mar/27/2024 - Start screen and GUI (start/quit/load game/ clear game) buttons added. Endgame defined. Startscreen and endscreen created. JSON file created for save/load/clear game save. 2D array created and filled in with appropriate variables (for the map).
