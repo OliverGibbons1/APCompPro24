@@ -10,3 +10,5 @@ This project will be the final for my AP Computer Programming course. This marks
 Mar/20/2024 - Class diagram created and added to "images" folder. ReadMe updated with a more inclusive description of the project. Skeleton (based on the current class diagram) created and instance variables created.
 
 Mar/27/2024 - Start screen and GUI (start/quit/load game/ clear game) buttons added. Endgame defined. Startscreen and endscreen created. JSON file created for save/load/clear game. 2D array created and filled in with appropriate variables (for the map). 2D array turned into a map that is called when the game starts.
+
+Mar/28/2024 - Adding enemies to the ArrayList based on round. Round start defined and nextRound method created. InfoBar created for display of important instance variables (health, gold, round).
