@@ -40,75 +40,97 @@ void draw() {
   rectMode(CENTER);
   textMode(CENTER);
   textAlign(CENTER, CENTER);
-  m.displaySSMap();
-  noFill();
-  stroke(0);
-  strokeWeight(2);
-  startButton.display();
-  quitButton.display();
-  loadGameButton.display();
-  clearSaveButton.display();
-  //Starting buttons
-  String s = "Start";
-  String q = "Quit";
-  String l = "Load Game";
-  String c = "Clear Save";
-  String i = " ";
-  textSize(22);
-  text(s, startButton.x, startButton.y);
-  text(q, quitButton.x, quitButton.y);
-  text(l, loadGameButton.x, loadGameButton.y);
-  textSize(8);
-  text(c, clearSaveButton.x, clearSaveButton.y);
-  fill(0);
+  imageMode(CENTER);
+  if (!play) {
+    m.displaySSMap();
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+    startButton.display();
+    quitButton.display();
+    loadGameButton.display();
+    clearSaveButton.display();
+    //Starting buttons
+    String s = "Start";
+    String q = "Quit";
+    String l = "Load Game";
+    String c = "Clear Save";
+    String i = " ";
+    textSize(22);
+    text(s, startButton.x, startButton.y);
+    text(q, quitButton.x, quitButton.y);
+    text(l, loadGameButton.x, loadGameButton.y);
+    textSize(8);
+    text(c, clearSaveButton.x, clearSaveButton.y);
+    fill(0);
 
-  if (startButton.pressed()) {
-    play = true;
-    s = s.equals(i) ? i:s;
-  }
-  if (loadGameButton.pressed()) {
-    play = true;
-    saveGame = loadJSONObject("data/new.json");
-    savedGame = saveGame.getBoolean("savedGame");
-    if (savedGame) {
-      health = saveGame.getInt("health");
-      money = saveGame.getInt("money");
-      s = s.equals(i) ? i:s;
-    } else {
-      s = s.equals(i) ? i:s;
+    if (startButton.pressed()) {
       play = true;
+      s = s.equals(i) ? i:s;
+    }
+    if (loadGameButton.pressed()) {
+      play = true;
+      saveGame = loadJSONObject("data/new.json");
+      savedGame = saveGame.getBoolean("savedGame");
+      if (savedGame) {
+        health = saveGame.getInt("health");
+        money = saveGame.getInt("money");
+        s = s.equals(i) ? i:s;
+      } else {
+        s = s.equals(i) ? i:s;
+        play = true;
+      }
+    }
+    if (quitButton.pressed()) {
+      exit();
+    }
+    if (clearSaveButton.pressed()) {
+      clearSave();
     }
   }
-  if (quitButton.pressed()) {
-    exit();
-  }
-  if (clearSaveButton.pressed()) {
-    clearSave();
+  //Start of play------------------------------------------------------
+  if (play) {
+    m.displayPlayMap();
+    infoBar();
   }
 
-  //Count enemies passing x & game over logic
+  //Temporary enemy.size() != 0; eventually check to see that all towers are placed prior to starting
+  // the first round
+  if (enemy.size() == 0) {
+    round++;
+    nextRound(round);
+  }
+  //Enemy stuffs: Count enemies passing Y
   for (int j = 0; j < enemy.size(); j++) {
     Enemy e = enemy.get(j);
-    if (e.passX()) {
+    e.move();
+    e.display();
+    //Counting
+    if (e.passY()) {
+      enemy.remove(j);
       enemyCount++;
+      health--; //ToDo health -= enemy.y like rocks;
     }
   }
+  //Game Over logic
   if (checkGameOver()) {
     m.displayEndMap();
   }
-
-  //Start of play
-  if (play) {
-    m.displayPlayMap();
+}
+void nextRound(int round) {
+  int enemyAdd = round * 2;
+  for (int i = 0; i < enemyAdd; i ++) {
+    enemy.add(new Enemy());
   }
 }
 boolean checkGameOver() {
-  if (enemyCount == 30) {
+  if (enemyCount >= 30) {
     return true;
   } else {
     return false;
   }
 }
+
 void saveGame() {
   savedGame = true;
   saveGame.setInt("health", health);
@@ -117,10 +139,22 @@ void saveGame() {
   saveJSONObject(saveGame, "data/new.json");
   exit();
 }
+
 void clearSave() {
   savedGame = false;
   saveGame.setInt("health", 0);
   saveGame.setInt("money", 0);
   saveGame.setBoolean("savedGame", false);
   saveJSONObject(saveGame, "data/new.json");
+}
+
+void infoBar() {
+  rectMode(CENTER);
+  fill(150, 150);
+  rect(width/2, 32, 600, 50);
+  textSize(15);
+  fill(0);
+  text("Round: " + round, width/4, 32);
+  text("Gold: " + money, width/2, 32);
+  text("Health: " + health, (width/4) + (width/2), 32);
 }
