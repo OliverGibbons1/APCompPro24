@@ -92,14 +92,15 @@ void draw() {
   if (play) {
     m.displayPlayMap();
     infoBar();
+
+    //Temporary enemy.size() != 0; eventually check to see that all towers are placed prior to starting
+    // the first round
+    if (enemy.size() == 0) {
+      round++;
+      nextRound(round);
+    }
   }
 
-  //Temporary enemy.size() != 0; eventually check to see that all towers are placed prior to starting
-  // the first round
-  if (enemy.size() == 0) {
-    round++;
-    nextRound(round);
-  }
   //Enemy stuffs: Count enemies passing Y
   for (int j = 0; j < enemy.size(); j++) {
     Enemy e = enemy.get(j);
