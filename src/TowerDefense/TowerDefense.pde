@@ -3,8 +3,7 @@
 
 // TO DO:
 // Make buttons out of tower spots; figure out tower class hiearchy; make checks for tower placement;
-// EMENY: make checks for enemy movement (recursive); make enemy movement; display enemy; 
-//ENEMY/TOWER: enemy/tower interaction (health, remove);
+// make checks for enemy movement (recursive); make enemy movement; display enemy;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
 // MAIN: floating box that displays player stats at grid [0] [c]; money, round, health, saveGame button?
@@ -23,7 +22,7 @@ void setup() {
   m = new Map();
   size(640, 640);
   health = 100;
-  round = 1;
+  round = 0;
   money = 500;
   enemyCount = 0;
   play = false;
@@ -49,7 +48,6 @@ void draw() {
   quitButton.display();
   loadGameButton.display();
   clearSaveButton.display();
-
   //Starting buttons
   String s = "Start";
   String q = "Quit";
@@ -88,7 +86,13 @@ void draw() {
     clearSave();
   }
 
-  //gameOver check
+  //Count enemies passing x & game over logic
+  for (int j = 0; j < enemy.size(); j++) {
+    Enemy e = enemy.get(j);
+    if (e.passX()) {
+      enemyCount++;
+    }
+  }
   if (checkGameOver()) {
     m.displayEndMap();
   }
@@ -96,27 +100,6 @@ void draw() {
   //Start of play
   if (play) {
     m.displayPlayMap();
-    infoBar();
-    //Count enemies passing x and remove them
-    for (int j = 0; j < enemy.size(); j++) {
-      Enemy e = enemy.get(j);
-      if (e.passX()) {
-        enemy.remove(j);
-        enemyCount++;
-        health--;
-      }
-      if (enemy.size() == 0) {
-        round ++;
-        nextRound(round);
-      }
-    }
-    //Levels and how to add enemies
-  }
-}
-void nextRound(int round) {
-  round *= 2;
-  for (int i = 0; i < round; i ++) {
-    enemy.add(new Enemy());
   }
 }
 boolean checkGameOver() {
@@ -140,14 +123,4 @@ void clearSave() {
   saveGame.setInt("money", 0);
   saveGame.setBoolean("savedGame", false);
   saveJSONObject(saveGame, "data/new.json");
-}
-void infoBar() {
-  rectMode(CENTER);
-  fill(150, 150);
-  rect(width/2, 32, 600, 50);
-  textSize(15);
-  fill(0);
-  text("Round: " + round, width/4, 32);
-  text("Gold: " + money, width/2, 32);
-  text("Health: " + health, (width/4) + (width/2), 32);
 }
