@@ -4,9 +4,22 @@ class MageTower extends Tower {
   PImage mageTower;
 
   MageTower () {
-    this.extraDamage = extraDamage;
+    extraDamage = 20;
+    super.x = x;
+    super.y = y;
+    super.cost = 150;
+    super.damage = 15;
+    super.range = 98;
+    super.tower = loadImage("towerImages/magicTower.png");
     //mageTower =
   }
+
+  void attack() {
+    if (inRange(e)) {
+      e.health -= damage;
+    }
+  }
+
   void applySpecial() {
   }
 }

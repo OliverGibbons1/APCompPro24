@@ -9,7 +9,7 @@ class Map {
     endScreen = loadImage("towerImages/endscreen.png");
     tile0 = loadImage("towerImages/CobbleStoneTile.png");
     tile1 = loadImage("towerImages/DirtTile.png");
-    tile2 =  loadImage("towerImages/PlanksTile.png");
+    tile2 = loadImage("towerImages/PlanksTile.png");
     //playScreen = loadImage("");
     rows = 10;
     cols = 10;
@@ -17,11 +17,13 @@ class Map {
     grid = new int [10] [10];
     lastRow = grid.length - 1;
     lastCol = grid[0].length - 1;
-    //for (int r = 0; r <= lastRow; r++) {
-    //  for (int c = 0; c <= lastCol; c++) {
-    //    tile = grid [r] [c];
-    //  }
-    //}
+    
+    for (int r = 0; r <= lastRow; r++) {
+      for (int c = 0; c <= lastCol; c++) {
+        tile = grid [r] [c];
+      }
+    }
+    
     makePlayMap();
   }
   void displaySSMap() {
@@ -95,21 +97,8 @@ class Map {
     //OS #4
     grid [9] [7] = 1;
     grid [9] [8] = 1;
-
-    //Print check - used for testing only
-    //for (int r = 0; r <= lastRow; r++) {
-    //  for (int c = 0; c <= lastCol; c++) {
-    //    if (grid[r][c] == 0) {
-    //      System.out.print("0"); // (nothing can be placed)
-    //    } else if (grid[r][c] == 1) {
-    //      System.out.print("1"); // (where enemies can traverse)
-    //    } else if (grid[r][c] == 2) {
-    //      System.out.print("2"); // (where towers can be placed)
-    //    }
-    //  }
-    //  System.out.println(); // Move to the next row
-    //}
   }
+
   void displayPlayMap() {
     for (int r = 0; r <= lastRow; r++) {
       for (int c = 0; c <= lastCol; c++) {
@@ -126,6 +115,20 @@ class Map {
         }
       }
     }
+
+    //Print check - used for testing only
+    //for (int r = 0; r <= lastRow; r++) {
+    //  for (int c = 0; c <= lastCol; c++) {
+    //    if (grid[r][c] == 0) {
+    //      System.out.print("0"); // (nothing can be placed)
+    //    } else if (grid[r][c] == 1) {
+    //      System.out.print("1"); // (where enemies can traverse)
+    //    } else if (grid[r][c] == 2) {
+    //      System.out.print("2"); // (where towers can be placed)
+    //    }
+    //  }
+    //  System.out.println(); // Move to the next row
+    //}
   }
 
   void displayEndMap() {
@@ -162,10 +165,10 @@ class Map {
   //  }
   //}
 
-  //void placeTower(int tile, String towerType) {
-  //  if (tile == 0) {
-  //  } else if (tile == 1) {
-  //  } else if (tile == 2) {
-  //  }
-  //}
+  boolean canPlaceTower(int tile, int x, int y) {
+    if (tile == 2) {
+      return true;
+    }
+    return false;
+  }
 }

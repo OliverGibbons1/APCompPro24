@@ -13,10 +13,13 @@ class Button {
   }
 
   boolean pressed() {
-    if (mouseX < x+width && mouseX > x && mouseY < y+height && mouseY > y && mousePressed) {
-      return true;
-    } else {
-      return false;
-    }
+      return mouseX < x+width && mouseX > x && mouseY < y+height && mouseY > y && mousePressed;
+  }
+  
+  void remove() {
+  x = 640;
+  y = 640;
+  width = 0;
+  height = 0;
   }
 }

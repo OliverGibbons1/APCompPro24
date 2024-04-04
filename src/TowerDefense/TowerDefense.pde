@@ -6,17 +6,24 @@
 // make checks for enemy movement (recursive); make enemy movement; display enemy;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
-// MAIN: floating box that displays player stats at grid [0] [c]; money, round, health, saveGame button?
-
+// LAST SESSION: debug e.remove and fix freeze method on iceTower
 
 int money, round, health, enemyCount;
 Map m;
-Button startButton, quitButton, loadGameButton, clearSaveButton;
+Button startButton, quitButton, loadGameButton, clearSaveButton, saveGameButton, nextRound;
 JSONObject saveGame;
-boolean savedGame, play;
+boolean savedGame, play, move, first;
 int mapWidth = 640;
 int mapHeight = 640;
 ArrayList<Enemy> enemy = new ArrayList<Enemy>();
+Tower t;
+Timer attackTimer;
+
+String s = "Start";
+String q = "Quit";
+String l = "Load Game";
+String c = "Clear Save";
+String i = " ";
 
 void setup() {
   m = new Map();
@@ -25,7 +32,9 @@ void setup() {
   round = 0;
   money = 500;
   enemyCount = 0;
+  first = true;
   play = false;
+  move = true;
 
   saveGame = new JSONObject();
 
@@ -33,6 +42,11 @@ void setup() {
   quitButton = new Button(mapWidth/2, 3*(mapHeight/4) + 20, 140, 60);
   loadGameButton = new Button((mapWidth/6)*5, mapHeight/3.5, 112, 48);
   clearSaveButton = new Button(mapWidth/2, 3*(mapHeight/4) + 100, 40, 40);
+  saveGameButton = new Button(((mapWidth/5) * 4) + 20, 32, 128, 32);
+  nextRound = new Button(mapHeight / 2, mapWidth / 2, 300, 300);
+
+  t = new IceTower(96, 416);
+  attackTimer = new Timer(2000);
 }
 
 void draw() {
@@ -41,7 +55,7 @@ void draw() {
   textMode(CENTER);
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
-  if (!play) {
+  if (!play && first) {
     m.displaySSMap();
     noFill();
     stroke(0);
@@ -51,11 +65,7 @@ void draw() {
     loadGameButton.display();
     clearSaveButton.display();
     //Starting buttons
-    String s = "Start";
-    String q = "Quit";
-    String l = "Load Game";
-    String c = "Clear Save";
-    String i = " ";
+
     textSize(22);
     text(s, startButton.x, startButton.y);
     text(q, quitButton.x, quitButton.y);
@@ -66,10 +76,12 @@ void draw() {
 
     if (startButton.pressed()) {
       play = true;
+      first = false;
       s = s.equals(i) ? i:s;
     }
     if (loadGameButton.pressed()) {
       play = true;
+      first = false;
       saveGame = loadJSONObject("data/new.json");
       savedGame = saveGame.getBoolean("savedGame");
       if (savedGame) {
@@ -79,6 +91,7 @@ void draw() {
       } else {
         s = s.equals(i) ? i:s;
         play = true;
+        first = false;
       }
     }
     if (quitButton.pressed()) {
@@ -91,45 +104,78 @@ void draw() {
   //Start of play------------------------------------------------------
   if (play) {
     m.displayPlayMap();
+    t.display();
     infoBar();
-
     //Temporary enemy.size() != 0; eventually check to see that all towers are placed prior to starting
     // the first round
     if (enemy.size() == 0) {
-      round++;
-      nextRound(round);
+      nextRound(1);
+      //nextRoundHandle();
     }
-  }
+    move = true;
 
-  //Enemy stuffs: Count enemies passing Y
-  for (int j = 0; j < enemy.size(); j++) {
-    Enemy e = enemy.get(j);
-    e.move();
-    e.display();
-    //Counting
-    if (e.passY()) {
-      enemy.remove(j);
-      enemyCount++;
-      health--; //ToDo health -= enemy.y like rocks;
+    //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
+    for (int j = enemy.size() - 1; j >= 0; j--) {
+      Enemy e = enemy.get(j);
+      // attack if in range and if timer is finished
+      e.display();
+      if (move) {
+        e.move();
+      }
+      if (t.inRange(e)) {
+        if (!attackTimer.isStarted()) {
+          attackTimer.start();
+          println("Started");
+        } else if (attackTimer.isFinished()) {
+          // If attackTimer is finished, reset it and perform attack
+          attackTimer.start(); // Reset the timer
+          t.attack();
+        }
+      }
+
+      if (e.getHealth() < 0) { // remove if dead
+        print(" removed ");
+        enemy.remove(j);
+        money += e.rewardMoney;
+      }
+      //Counting
+      if (e.passY()) {
+        enemy.remove(j);
+        enemyCount++;
+        health -= enemyCount; //ToDo health -= enemy.y like rocks;
+      }
     }
-  }
-  //Game Over logic
-  if (checkGameOver()) {
-    m.displayEndMap();
+    //Game Over logic
+    if (checkGameOver()) {
+      m.displayEndMap();
+      play = false;
+    }
   }
 }
+
+
+//void nextRoundHandle() {
+//  nextRound.display();
+//  fill(0);
+//  String nr = "Click for Next Round";
+//  text(nr, height / 2, width / 2);
+//  if (nextRound.pressed()) {
+//    nextRound.remove();
+//    nr = nr.equals(i) ? i:nr;
+//    round++;
+//    nextRound(round);
+//  }
+//}
+
 void nextRound(int round) {
   int enemyAdd = round * 2;
   for (int i = 0; i < enemyAdd; i ++) {
     enemy.add(new Enemy());
   }
 }
+
 boolean checkGameOver() {
-  if (enemyCount >= 30) {
-    return true;
-  } else {
-    return false;
-  }
+  return enemyCount >= 30;
 }
 
 void saveGame() {
@@ -155,7 +201,13 @@ void infoBar() {
   rect(width/2, 32, 600, 50);
   textSize(15);
   fill(0);
-  text("Round: " + round, width/4, 32);
-  text("Gold: " + money, width/2, 32);
-  text("Health: " + health, (width/4) + (width/2), 32);
+  text("Round: " + round, width/5, 32);
+  text("Gold: " + money, (width/5) * 2, 32);
+  text("Health: " + health, (width/5) * 3, 32);
+  saveGameButton.display();
+  fill(200);
+  text("Save Game & Quit", ((width/5) * 4) + 20, 32);
+  if (saveGameButton.pressed()) {
+    saveGame();
+  }
 }
