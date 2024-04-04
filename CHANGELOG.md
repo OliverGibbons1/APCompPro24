@@ -12,3 +12,5 @@ Mar/20/2024 - Class diagram created and added to "images" folder. ReadMe updated
 Mar/27/2024 - Start screen and GUI (start/quit/load game/ clear game) buttons added. Endgame defined. Startscreen and endscreen created. JSON file created for save/load/clear game. 2D array created and filled in with appropriate variables (for the map). 2D array turned into a map that is called when the game starts.
 
 Mar/28/2024 - Adding enemies to the ArrayList based on round. Round start defined and nextRound method created. InfoBar created for display of important instance variables (health, gold, round).
+
+Apr/3/2024 - Tower pictures created and added. Range and attack added to IceTower. Special attack added to IceTower. Removing enemies due to damage. Timer class added (to space attacks from towers out). 
