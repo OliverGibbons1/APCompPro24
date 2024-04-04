@@ -21,7 +21,7 @@ class Enemy {
     enemy.resize(100, 100);
   }
   void move() {
-    //x += 1;
+    x += 1;
     //y++;
   }
   boolean passY() {

@@ -16,16 +16,16 @@ class IceTower extends Tower {
     e.health -= damage;
     tick++;
     println(" attacked " + tick + " health " + e.health);
-    if (tick >= 3) {
+    if (tick >= 2) {
       applySpecial();
       tick = 0;
     }
   }
 
   void applySpecial() {
-    //  move = false;
-    //  delay(freezeTime);
-    //  move = true;
-    //}
+    //TODO add ice picture over enemy to indicate frozen-ness
+    move = false;
+    delay(freezeTime);
+    move = true;
   }
 }
