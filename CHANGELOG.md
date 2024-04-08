@@ -14,3 +14,5 @@ Mar/27/2024 - Start screen and GUI (start/quit/load game/ clear game) buttons ad
 Mar/28/2024 - Adding enemies to the ArrayList based on round. Round start defined and nextRound method created. InfoBar created for display of important instance variables (health, gold, round).
 
 Apr/3/2024 - Tower pictures created and added. Range and attack added to IceTower. Special attack added to IceTower. Removing enemies due to damage. Timer class added (to space attacks from towers out). 
+
+Apr/8/2024 - Fixes to code; Enemy, TowerDefense, and Butotn class
