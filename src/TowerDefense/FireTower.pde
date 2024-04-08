@@ -15,7 +15,7 @@ class FireTower extends Tower {
 
   void attack() {
     if (inRange(e)) {
-      e.health -= damage;
+      e.Ehealth -= damage;
     }
   }
 

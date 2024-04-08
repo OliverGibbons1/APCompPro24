@@ -2,28 +2,30 @@
 
 
 // TO DO:
-// Make buttons out of tower spots; figure out tower class hiearchy; make checks for tower placement;
-// make checks for enemy movement (recursive); make enemy movement; display enemy;
+// NRButton doesn't work as intended, fix
+// Make buttons out of tower spots; tower placement; make checks for tower placement;
+// make checks for enemy movement (recursive); make enemy movement;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
 // LAST SESSION: debug e.remove and fix freeze method on iceTower
 
-int money, round, health, enemyCount;
+private int money, round, health, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton, saveGameButton, nextRound;
 JSONObject saveGame;
-boolean savedGame, play, move, first;
+private boolean savedGame, play, move, first;
 int mapWidth = 640;
 int mapHeight = 640;
 ArrayList<Enemy> enemy = new ArrayList<Enemy>();
+ArrayList<Enemy> eToRemove = new ArrayList<Enemy>();
 Tower t;
 Timer attackTimer;
 
-String s = "Start";
-String q = "Quit";
-String l = "Load Game";
-String c = "Clear Save";
-String i = " ";
+private String s = "Start";
+private String q = "Quit";
+private String l = "Load Game";
+private String c = "Clear Save";
+private String i = " ";
 
 void setup() {
   m = new Map();
@@ -106,22 +108,20 @@ void draw() {
     m.displayPlayMap();
     t.display();
     infoBar();
-    //Temporary enemy.size() != 0; eventually check to see that all towers are placed prior to starting
-    // the first round
+    //Temporary; eventually check to see that all towers are placed prior to starting
     if (enemy.size() == 0) {
-      nextRound(1);
-      //nextRoundHandle();
+      nextRoundHandle();
     }
     move = true;
 
     //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
     for (int j = enemy.size() - 1; j >= 0; j--) {
       Enemy e = enemy.get(j);
-      // attack if in range and if timer is finished
       e.display();
       if (move) {
         e.move();
       }
+      // attack if in range and if timer is finished
       if (t.inRange(e)) {
         if (!attackTimer.isStarted()) {
           attackTimer.start();
@@ -133,17 +133,24 @@ void draw() {
         }
       }
 
-      if (e.getHealth() < 0) { // remove if dead
-        print(" removed ");
-        enemy.remove(j);
+      if (e.dead()) {
+        println(" removed ");
         money += e.rewardMoney;
+        eToRemove.add(e);
       }
       //Counting
-      if (e.passY()) {
-        enemy.remove(j);
+      if (e.passX()) {
+        println("Pass X");
         enemyCount++;
         health -= enemyCount; //ToDo health -= enemy.y like rocks;
+        eToRemove.add(e);
       }
+
+      // Remove marked enemies
+      for (Enemy en : eToRemove) {
+        enemy.remove(en);
+      }
+      eToRemove.clear(); // Clear the list for the next frame
     }
     //Game Over logic
     if (checkGameOver()) {
@@ -154,18 +161,23 @@ void draw() {
 }
 
 
-//void nextRoundHandle() {
-//  nextRound.display();
-//  fill(0);
-//  String nr = "Click for Next Round";
-//  text(nr, height / 2, width / 2);
-//  if (nextRound.pressed()) {
-//    nextRound.remove();
-//    nr = nr.equals(i) ? i:nr;
-//    round++;
-//    nextRound(round);
-//  }
-//}
+void nextRoundHandle() {
+  nextRound.x = mapWidth / 2; // Centering the button horizontally
+  nextRound.y = mapHeight / 2; // Centering the button vertically
+  nextRound.width = 300;
+  nextRound.height = 300;
+  nextRound.display();
+  fill(0);
+  String nr = "Click for Next Round";
+  text(nr, height / 2, width / 2);
+  if (nextRound.pressed()) {
+    println("New Round");
+    nextRound.remove();
+    nr = nr.equals(i) ? i:nr;
+    round++;
+    nextRound(round);
+  }
+}
 
 void nextRound(int round) {
   int enemyAdd = round * 2;

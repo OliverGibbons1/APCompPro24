@@ -1,5 +1,5 @@
 class Enemy {
-  int health, speed, rewardMoney, x, y, size;
+  int Ehealth, speed, rewardMoney, x, y, size;
   PImage enemy;
   Map m;
 
@@ -9,8 +9,8 @@ class Enemy {
   Enemy () {
     x = 100;
     y = int(random(512, 576));
-    this.health = 100;
-    this.speed = speed;
+    Ehealth = 100;
+    speed = 1;
     rewardMoney = 50;
     enemy = loadImage("towerImages/enemy.png");
     m = new Map();
@@ -21,18 +21,26 @@ class Enemy {
     enemy.resize(100, 100);
   }
   void move() {
-    x += 1;
+    x += speed;
     //y++;
   }
   boolean passY() {
-    if (Y > (height + 15)) {
+    if (y > (height + 40)) {
       return true;
     } else {
       return false;
     }
   }
-  int getHealth() {
-  return health;
+  
+  //testing only
+  boolean passX() {
+      if (x > (width + 40)) {
+      return true;
+    } else {
+      return false;
+    }
   }
-  //Recursive move method
+  boolean dead() {
+  return Ehealth <= 0;
+  }
 }

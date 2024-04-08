@@ -8,14 +8,14 @@ class IceTower extends Tower {
     super.y = y;
     super.cost = 100;
     super.damage = 50;
-    super.range = 250;
+    super.range = 550;
     super.tower = loadImage("towerImages/iceTower.png");
   }
 
   void attack() {
-    e.health -= damage;
+    e.Ehealth -= damage;
     tick++;
-    println(" attacked " + tick + " health " + e.health);
+    println(" attacked " + tick + " health " + e.Ehealth);
     if (tick >= 2) {
       applySpecial();
       tick = 0;

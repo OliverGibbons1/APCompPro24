@@ -7,12 +7,6 @@ abstract class Tower {
   Enemy e;
 
   Tower () {
-    this.x = x;
-    this.y = y;
-    this.cost = cost;
-    this.range = range;
-    this.damage = damage;
-    this.tower = tower;
     tick = 0;
     attack = false;
     e = new Enemy();

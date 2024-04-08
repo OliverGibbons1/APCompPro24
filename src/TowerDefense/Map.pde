@@ -17,14 +17,12 @@ class Map {
     grid = new int [10] [10];
     lastRow = grid.length - 1;
     lastCol = grid[0].length - 1;
-    
+
     for (int r = 0; r <= lastRow; r++) {
       for (int c = 0; c <= lastCol; c++) {
         tile = grid [r] [c];
       }
     }
-    
-    makePlayMap();
   }
   void displaySSMap() {
     image(startScreen, width/2, height/2);
@@ -100,6 +98,7 @@ class Map {
   }
 
   void displayPlayMap() {
+    makePlayMap();
     for (int r = 0; r <= lastRow; r++) {
       for (int c = 0; c <= lastCol; c++) {
         // Check the value of each cell and print the corresponding symbol
