@@ -2,7 +2,7 @@
 
 
 // TO DO:
-// NRButton doesn't work as intended, fix
+// applySpecial() effects (freeze cube, fire animation)
 // Make buttons out of tower spots; tower placement; make checks for tower placement;
 // make checks for enemy movement (recursive); make enemy movement;
 // mostly tower and enemy, map set up

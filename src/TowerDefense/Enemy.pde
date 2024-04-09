@@ -1,5 +1,5 @@
 class Enemy {
-  int Ehealth, speed, rewardMoney, x, y, size;
+  int health, speed, rewardMoney, x, y, size;
   PImage enemy;
   Map m;
 
@@ -9,7 +9,7 @@ class Enemy {
   Enemy () {
     x = 100;
     y = int(random(512, 576));
-    Ehealth = 100;
+    health = 100;
     speed = 1;
     rewardMoney = 50;
     enemy = loadImage("towerImages/enemy.png");
@@ -41,6 +41,6 @@ class Enemy {
     }
   }
   boolean dead() {
-  return Ehealth <= 0;
+  return health <= 0;
   }
 }

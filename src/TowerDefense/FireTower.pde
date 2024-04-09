@@ -14,8 +14,12 @@ class FireTower extends Tower {
   }
 
   void attack() {
-    if (inRange(e)) {
-      e.Ehealth -= damage;
+    e.health -= damage;
+    tick++;
+    println(" attacked " + tick + " health " + e.health);
+    if (tick >= 2) {
+      applySpecial();
+      tick = 0;
     }
   }
 
