@@ -3,15 +3,14 @@ class MageTower extends Tower {
   int extraDamage;
   PImage mageTower;
 
-  MageTower () {
+  MageTower (int x, int y) {
     extraDamage = 20;
     super.x = x;
     super.y = y;
     super.cost = 150;
     super.damage = 15;
-    super.range = 98;
+    super.range = 500;
     super.tower = loadImage("towerImages/magicTower.png");
-    //mageTower =
   }
 
   void attack() {
@@ -25,6 +24,7 @@ class MageTower extends Tower {
   }
 
   void applySpecial() {
+    println("Mage Special");
     damage += extraDamage;
     delay(5000);
     damage = 15;

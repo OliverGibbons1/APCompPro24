@@ -24,5 +24,6 @@ class FireTower extends Tower {
   }
 
   void applySpecial() {
+    print("Fire Special");
   }
 }

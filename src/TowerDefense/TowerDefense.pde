@@ -2,6 +2,7 @@
 
 
 // TO DO:
+// No delay() in applySpecial()
 // applySpecial() effects (freeze cube, fire animation)
 // Make buttons out of tower spots; tower placement; make checks for tower placement;
 // make checks for enemy movement (recursive); make enemy movement;
@@ -13,7 +14,8 @@ private int money, round, health, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton, saveGameButton, nextRound;
 JSONObject saveGame;
-private boolean savedGame, play, move, first;
+private boolean savedGame, play, first;
+public static boolean move;
 int mapWidth = 640;
 int mapHeight = 640;
 ArrayList<Enemy> enemy = new ArrayList<Enemy>();

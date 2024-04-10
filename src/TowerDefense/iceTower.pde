@@ -1,9 +1,9 @@
 class IceTower extends Tower {
 
-  int freezeTime;
+  int freezeTime = 3000;
 
   IceTower (int x, int y) {
-    freezeTime = 2000;
+    super.delay = freezeTime;
     super.x = x;
     super.y = y;
     super.cost = 100;
@@ -20,12 +20,15 @@ class IceTower extends Tower {
       applySpecial();
       tick = 0;
     }
+    if (timer.isFinished()) {
+      move = true;
+    }
   }
 
   void applySpecial() {
     //TODO add ice picture over enemy to indicate frozen-ness
+    println("Freeze special");
     move = false;
-    delay(freezeTime);
-    move = true;
+    timer.start();
   }
 }

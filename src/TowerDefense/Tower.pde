@@ -1,15 +1,17 @@
 abstract class Tower {
 
   protected int cost, range, damage, x, y;
-  int tick;
+  int tick, delay;
   PImage tower;
   boolean attack;
   Enemy e;
+  Timer timer;
 
   Tower () {
     tick = 0;
     attack = false;
     e = new Enemy();
+    timer = new Timer(delay);
   }
 
   abstract void attack();
