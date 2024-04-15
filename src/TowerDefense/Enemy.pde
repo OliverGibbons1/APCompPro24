@@ -9,7 +9,7 @@ class Enemy {
   Enemy () {
     x = 100;
     y = int(random(512, 576));
-    health = 100;
+    this.health = 100;
     speed = 1;
     rewardMoney = 50;
     enemy = loadImage("towerImages/enemy.png");
@@ -31,16 +31,21 @@ class Enemy {
       return false;
     }
   }
-  
+
   //testing only
   boolean passX() {
-      if (x > (width + 40)) {
+    if (x > (width + 40)) {
       return true;
     } else {
       return false;
     }
   }
-  boolean dead() {
-  return health <= 0;
+  boolean l() {
+    if (health >= 0)
+    {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

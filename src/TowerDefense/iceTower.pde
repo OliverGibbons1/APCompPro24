@@ -1,6 +1,7 @@
 class IceTower extends Tower {
 
   int freezeTime = 3000;
+  boolean special = false;
 
   IceTower (int x, int y) {
     super.delay = freezeTime;
@@ -18,17 +19,16 @@ class IceTower extends Tower {
     println(" attacked " + tick + " health " + e.health);
     if (tick >= 2) {
       applySpecial();
-      tick = 0;
-    }
-    if (timer.isFinished()) {
-      move = true;
     }
   }
 
   void applySpecial() {
     //TODO add ice picture over enemy to indicate frozen-ness
+    tick = 0;
     println("Freeze special");
-    move = false;
+    special = true;
     timer.start();
+    if (!timer.isFinished())
+      special = false;
   }
 }

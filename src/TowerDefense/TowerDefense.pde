@@ -10,12 +10,12 @@
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
 // LAST SESSION: debug e.remove and fix freeze method on iceTower
 
-private int money, round, health, enemyCount;
+private int money, round, life, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton, saveGameButton, nextRound;
 JSONObject saveGame;
 private boolean savedGame, play, first;
-public static boolean move;
+//public static boolean move;
 int mapWidth = 640;
 int mapHeight = 640;
 ArrayList<Enemy> enemy = new ArrayList<Enemy>();
@@ -32,13 +32,13 @@ private String i = " ";
 void setup() {
   m = new Map();
   size(640, 640);
-  health = 100;
+  life = 100;
   round = 0;
   money = 500;
   enemyCount = 0;
   first = true;
   play = false;
-  move = true;
+  //move = true;
 
   saveGame = new JSONObject();
 
@@ -89,7 +89,7 @@ void draw() {
       saveGame = loadJSONObject("data/new.json");
       savedGame = saveGame.getBoolean("savedGame");
       if (savedGame) {
-        health = saveGame.getInt("health");
+        life = saveGame.getInt("life");
         money = saveGame.getInt("money");
         s = s.equals(i) ? i:s;
       } else {
@@ -114,13 +114,12 @@ void draw() {
     if (enemy.size() == 0) {
       nextRoundHandle();
     }
-    move = true;
-
+     
     //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
     for (int j = enemy.size() - 1; j >= 0; j--) {
       Enemy e = enemy.get(j);
       e.display();
-      if (move) {
+      if (!t.special) {
         e.move();
       }
       // attack if in range and if timer is finished
@@ -135,7 +134,7 @@ void draw() {
         }
       }
 
-      if (e.dead()) {
+      if (!e.l()) {
         println(" removed ");
         money += e.rewardMoney;
         eToRemove.add(e);
@@ -144,7 +143,7 @@ void draw() {
       if (e.passX()) {
         println("Pass X");
         enemyCount++;
-        health -= enemyCount; //ToDo health -= enemy.y like rocks;
+        life -= enemyCount; //ToDo health -= enemy.y like rocks;
         eToRemove.add(e);
       }
 
@@ -194,7 +193,7 @@ boolean checkGameOver() {
 
 void saveGame() {
   savedGame = true;
-  saveGame.setInt("health", health);
+  saveGame.setInt("life", life);
   saveGame.setInt("money", money);
   saveGame.setBoolean("savedGame", true);
   saveJSONObject(saveGame, "data/new.json");
@@ -217,7 +216,7 @@ void infoBar() {
   fill(0);
   text("Round: " + round, width/5, 32);
   text("Gold: " + money, (width/5) * 2, 32);
-  text("Health: " + health, (width/5) * 3, 32);
+  text("Life: " + life, (width/5) * 3, 32);
   saveGameButton.display();
   fill(200);
   text("Save Game & Quit", ((width/5) * 4) + 20, 32);
