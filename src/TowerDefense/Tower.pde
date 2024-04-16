@@ -3,7 +3,7 @@ abstract class Tower {
   protected int cost, range, damage, x, y;
   int tick, delay;
   PImage tower;
-  boolean attack, special;
+  boolean attack;
   Enemy e;
   Timer timer;
 

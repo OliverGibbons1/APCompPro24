@@ -1,6 +1,5 @@
 //Oliver Gibbons | March 2024
 
-
 // TO DO:
 // No delay() in applySpecial()
 // applySpecial() effects (freeze cube, fire animation)
@@ -119,9 +118,8 @@ void draw() {
     for (int j = enemy.size() - 1; j >= 0; j--) {
       Enemy e = enemy.get(j);
       e.display();
-      if (!t.special) {
         e.move();
-      }
+
       // attack if in range and if timer is finished
       if (t.inRange(e)) {
         if (!attackTimer.isStarted()) {

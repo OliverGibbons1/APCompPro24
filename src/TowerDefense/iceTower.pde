@@ -24,11 +24,8 @@ class IceTower extends Tower {
 
   void applySpecial() {
     //TODO add ice picture over enemy to indicate frozen-ness
+    //Frozen-ness does not allow tower to continue attacking the enemies. Potental problem with multiple enemies?
     tick = 0;
-    println("Freeze special");
-    special = true;
-    timer.start();
-    if (!timer.isFinished())
-      special = false;
+    e.freeze(freezeTime);
   }
 }
