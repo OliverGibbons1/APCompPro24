@@ -15,8 +15,10 @@ Mar/28/2024 - Adding enemies to the ArrayList based on round. Round start define
 
 Apr/3/2024 - Tower pictures created and added. Range and attack added to IceTower. Special attack added to IceTower. Removing enemies due to damage. Timer class added (to space attacks from towers out). 
 
-Apr/8/2024 - Fixes to code; Enemy, TowerDefense, and Butotn class
-
+Apr/8/2024 - Fixes to code; Enemy, TowerDefense, and Button class
+ -note-between here and Apr 17 the iceTower special is going to be problematic.
 Apr/15/2024 - Fixes to special attack for iceTower. Specials for other towers are in the works. 
 
 Apr/16/2024 - Fixes to range; more work on freezeSpecial() method in iceTower.
+
+Apr/17/2024 - Specials fixed for iceTower. Special added for mageTower. Special added to fireTower. Enemy remove method fixed. 
