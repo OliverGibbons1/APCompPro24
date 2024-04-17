@@ -1,5 +1,5 @@
 {
-  "savedGame": true,
-  "money": 500,
-  "health": 100
+  "savedGame": false,
+  "money": 0,
+  "health": 0
 }

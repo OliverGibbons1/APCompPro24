@@ -49,7 +49,7 @@ void setup() {
   nextRound = new Button(mapHeight / 2, mapWidth / 2, 300, 300);
 
   t = new IceTower(96, 416);
-  attackTimer = new Timer(2000);
+  attackTimer = new Timer(1000);
 }
 
 void draw() {
@@ -58,6 +58,7 @@ void draw() {
   textMode(CENTER);
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
+  //Startscreen--------------------------------------------------
   if (!play && first) {
     m.displaySSMap();
     noFill();
@@ -109,16 +110,17 @@ void draw() {
     m.displayPlayMap();
     t.display();
     infoBar();
+
     //Temporary; eventually check to see that all towers are placed prior to starting
     if (enemy.size() == 0) {
       nextRoundHandle();
     }
-     
+
     //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
     for (int j = enemy.size() - 1; j >= 0; j--) {
       Enemy e = enemy.get(j);
       e.display();
-        e.move();
+      e.move();
 
       // attack if in range and if timer is finished
       if (t.inRange(e)) {
@@ -130,6 +132,13 @@ void draw() {
           attackTimer.start(); // Reset the timer
           t.attack();
         }
+      }
+
+      if (t.tick >= 3) {
+        t.applySpecial();
+      }
+      if (t.fTimer.isStarted() && t.fTimer.isFinished()) {
+        e.unFreeze();
       }
 
       if (!e.l()) {
@@ -193,6 +202,7 @@ void saveGame() {
   savedGame = true;
   saveGame.setInt("life", life);
   saveGame.setInt("money", money);
+  saveGame.setInt("round", round);
   saveGame.setBoolean("savedGame", true);
   saveJSONObject(saveGame, "data/new.json");
   exit();
@@ -202,6 +212,7 @@ void clearSave() {
   savedGame = false;
   saveGame.setInt("health", 0);
   saveGame.setInt("money", 0);
+  saveGame.setInt("round", 0);
   saveGame.setBoolean("savedGame", false);
   saveJSONObject(saveGame, "data/new.json");
 }

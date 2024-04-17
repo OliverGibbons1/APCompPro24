@@ -5,13 +5,14 @@ abstract class Tower {
   PImage tower;
   boolean attack;
   Enemy e;
-  Timer timer;
+  Timer fTimer;
 
   Tower () {
     tick = 0;
     attack = false;
     e = new Enemy();
-    timer = new Timer(delay);
+    fTimer = new Timer(delay);
+    this.range = range;
   }
 
   abstract void attack();
@@ -21,15 +22,15 @@ abstract class Tower {
     imageMode(CENTER);
     if (mouseX < (x + 32) && mouseY > (y - 32) && mouseX > (x - 32) && mouseY < (y + 32)) {
       fill(#AA4A44, 150);
-      circle(x, y, range);
+      circle(x, y, range * 2);
     }
-      image(tower, x, y);
-      tower.resize(64, 64);
+    image(tower, x, y);
+    tower.resize(64, 64);
   }
 
   boolean inRange(Enemy enemy) {
-    double distance = Math.sqrt(Math.pow(enemy.x - x, 2) + Math.pow(enemy.y - y, 2));
-    return distance <= range;
+    double squaredDistance = Math.pow(enemy.x - x, 2) + Math.pow(enemy.y - y, 2);
+    return squaredDistance <= Math.pow(range, 2);
   }
 
   void upgrade() {
