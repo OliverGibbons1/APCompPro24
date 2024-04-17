@@ -5,7 +5,7 @@ abstract class Tower {
   PImage tower;
   boolean attack;
   Enemy e;
-  Timer fTimer, mageTimer, fireTimer;
+  Timer fTimer, mageTimer, fireTimer, burnTimer;
 
   Tower () {
     tick = 0;
@@ -14,13 +14,14 @@ abstract class Tower {
     this.delay = delay;
     fTimer = new Timer(delay);
     mageTimer = new Timer(2000);
-    fireTimer = new Timer(2000);
+    fireTimer = new Timer(10000);
+    burnTimer = new Timer(500);
   }
 
   abstract void attack(Enemy enemy);
   abstract void applySpecial(Enemy enemy);
   abstract void noSpecial(Enemy enemy);
-  
+
   void display() {
     imageMode(CENTER);
     if (mouseX < (x + 32) && mouseY > (y - 32) && mouseX > (x - 32) && mouseY < (y + 32)) {
@@ -34,6 +35,9 @@ abstract class Tower {
   boolean inRange(Enemy enemy) {
     double squaredDistance = Math.pow(enemy.x - x, 2) + Math.pow(enemy.y - y, 2);
     return squaredDistance <= Math.pow(range, 2);
+  }
+
+  void burn(Enemy enemy) {
   }
 
   void upgrade() {

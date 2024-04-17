@@ -2,32 +2,41 @@ class FireTower extends Tower {
 
   int passiveDamage;
   PImage fireTower;
+  boolean onFire;
 
-  FireTower () {
+  FireTower (int x, int y) {
     passiveDamage = 5;
     super.x = x;
     super.y = y;
     super.cost = 200;
     super.damage = 10;
-    super.range = 98;
+    super.range = 400;
     super.tower = loadImage("towerImages/fireTower.png");
   }
 
   void attack(Enemy enemy) {
-    e.health -= damage;
-    tick++;
-    println(" attacked " + tick + " health " + e.health);
-    if (tick >= 2) {
-      applySpecial(e);
-      tick = 0;
-    }
+    enemy.health -= damage;
+    println(" attacked. health " + enemy.health);
+    applySpecial(enemy);
   }
 
   void applySpecial(Enemy enemy) {
-    print("Fire Special");
+    fireTimer.start();
+    if (!burnTimer.isStarted()) {
+      burnTimer.start();
+    }
+  }
+
+  void burn (Enemy enemy) {
+    if (burnTimer.isFinished()) {
+      // If attackTimer is finished, reset it and perform attack
+      burnTimer.start(); // Reset the timer
+      enemy.health -= 5;
+      println("Fire Special: health " + enemy.health);
+    }
   }
 
   void noSpecial(Enemy enemy) {
-    enemy.unFreeze();
+    onFire = false;
   }
 }

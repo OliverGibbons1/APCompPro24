@@ -47,7 +47,7 @@ void setup() {
   saveGameButton = new Button(((mapWidth/5) * 4) + 20, 32, 128, 32);
   nextRound = new Button(mapHeight / 2, mapWidth / 2, 300, 300);
 
-  t = new MageTower(96, 416);
+  t = new FireTower(96, 416);
   attackTimer = new Timer(1000);
 }
 
@@ -136,13 +136,15 @@ void draw() {
       if (t.tick >= 3) {
         t.applySpecial(e);
       }
+
       if (t.fTimer.isStarted() && t.fTimer.isFinished())
         t.noSpecial(e);
       if (t.mageTimer.isStarted() && t.mageTimer.isFinished())
         t.noSpecial(e);
       if (t.fireTimer.isStarted() && t.fireTimer.isFinished())
         t.noSpecial(e);
-        
+      if (t.burnTimer.isStarted() && !t.fireTimer.isFinished())
+        t.burn(e);
       if (!e.l()) {
         println("removed ");
         money += e.rewardMoney;
