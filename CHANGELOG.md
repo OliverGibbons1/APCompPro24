@@ -18,3 +18,5 @@ Apr/3/2024 - Tower pictures created and added. Range and attack added to IceTowe
 Apr/8/2024 - Fixes to code; Enemy, TowerDefense, and Butotn class
 
 Apr/15/2024 - Fixes to special attack for iceTower. Specials for other towers are in the works. 
+
+Apr/16/2024 - Fixes to range; more work on freezeSpecial() method in iceTower.
