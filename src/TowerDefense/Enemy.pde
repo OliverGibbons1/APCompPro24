@@ -5,6 +5,7 @@ class Enemy {
   Map m;
   int[] rowDir = {-1, 1, 0, 0};
   int[] colDir = {0, 0, -1, 1};
+  boolean frozen;
 
   Enemy () {
     x = 100;
@@ -15,6 +16,7 @@ class Enemy {
     enemy = loadImage("towerImages/enemy.png");
     m = new Map();
     size = 100;
+    frozen = false;
   }
 
   void display() {
@@ -23,8 +25,8 @@ class Enemy {
   }
 
   void move() {
-    x += speed;
-    //y++;
+    if (!frozen)
+      x += speed;
   }
 
   boolean passY() {
@@ -52,11 +54,10 @@ class Enemy {
     }
   }
   void freeze() {
-    speed = speed/2;
-    println("Freeze special: new speed " + speed);
+    frozen = true;
   }
   void unFreeze() {
-    speed = 1;
-    println("Freeze finished: speed" + speed);
+    frozen = false;
+    println("Freeze finished: speed " + speed);
   }
 }

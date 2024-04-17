@@ -5,19 +5,22 @@ abstract class Tower {
   PImage tower;
   boolean attack;
   Enemy e;
-  Timer fTimer;
+  Timer fTimer, mageTimer, fireTimer;
 
   Tower () {
     tick = 0;
     attack = false;
     e = new Enemy();
+    this.delay = delay;
     fTimer = new Timer(delay);
-    this.range = range;
+    mageTimer = new Timer(2000);
+    fireTimer = new Timer(2000);
   }
 
-  abstract void attack();
-  abstract void applySpecial();
-
+  abstract void attack(Enemy enemy);
+  abstract void applySpecial(Enemy enemy);
+  abstract void noSpecial(Enemy enemy);
+  
   void display() {
     imageMode(CENTER);
     if (mouseX < (x + 32) && mouseY > (y - 32) && mouseX > (x - 32) && mouseY < (y + 32)) {

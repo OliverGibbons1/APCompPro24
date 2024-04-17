@@ -13,17 +13,21 @@ class FireTower extends Tower {
     super.tower = loadImage("towerImages/fireTower.png");
   }
 
-  void attack() {
+  void attack(Enemy enemy) {
     e.health -= damage;
     tick++;
     println(" attacked " + tick + " health " + e.health);
     if (tick >= 2) {
-      applySpecial();
+      applySpecial(e);
       tick = 0;
     }
   }
 
-  void applySpecial() {
+  void applySpecial(Enemy enemy) {
     print("Fire Special");
+  }
+
+  void noSpecial(Enemy enemy) {
+    enemy.unFreeze();
   }
 }

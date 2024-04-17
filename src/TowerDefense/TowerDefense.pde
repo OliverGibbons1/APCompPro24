@@ -1,7 +1,6 @@
 //Oliver Gibbons | March 2024
 
 // TO DO:
-// No delay() in applySpecial()
 // applySpecial() effects (freeze cube, fire animation)
 // Make buttons out of tower spots; tower placement; make checks for tower placement;
 // make checks for enemy movement (recursive); make enemy movement;
@@ -48,7 +47,7 @@ void setup() {
   saveGameButton = new Button(((mapWidth/5) * 4) + 20, 32, 128, 32);
   nextRound = new Button(mapHeight / 2, mapWidth / 2, 300, 300);
 
-  t = new IceTower(96, 416);
+  t = new MageTower(96, 416);
   attackTimer = new Timer(1000);
 }
 
@@ -130,19 +129,22 @@ void draw() {
         } else if (attackTimer.isFinished()) {
           // If attackTimer is finished, reset it and perform attack
           attackTimer.start(); // Reset the timer
-          t.attack();
+          t.attack(e);
         }
       }
 
       if (t.tick >= 3) {
-        t.applySpecial();
+        t.applySpecial(e);
       }
-      if (t.fTimer.isStarted() && t.fTimer.isFinished()) {
-        e.unFreeze();
-      }
-
+      if (t.fTimer.isStarted() && t.fTimer.isFinished())
+        t.noSpecial(e);
+      if (t.mageTimer.isStarted() && t.mageTimer.isFinished())
+        t.noSpecial(e);
+      if (t.fireTimer.isStarted() && t.fireTimer.isFinished())
+        t.noSpecial(e);
+        
       if (!e.l()) {
-        println(" removed ");
+        println("removed ");
         money += e.rewardMoney;
         eToRemove.add(e);
       }

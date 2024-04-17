@@ -1,35 +1,31 @@
 class IceTower extends Tower {
 
-  int freezeTime = 1000;
-  boolean special = false;
+  int freezeTime = 2000;
 
   IceTower (int x, int y) {
     super.delay = freezeTime;
     super.x = x;
     super.y = y;
     super.cost = 100;
-    super.damage = 50;
+    super.damage = 10;
     super.range = 400;
     super.tower = loadImage("towerImages/iceTower.png");
   }
 
-  void attack() {
-    e.health -= damage;
+  void attack(Enemy enemy) {
+    enemy.health -= damage;
     tick++;
-    println(" attacked " + tick + " health " + e.health + " e.speed " + e.speed);
-    //if (tick >= 3) {
-    //  applySpecial();
-    //}
-    //if (fTimer.isFinished() && fTimer.isStarted()) {
-    //  e.unFreeze();
-    //}
+    println(" attacked " + tick + " health " + enemy.health + " e.speed " + enemy.speed);
   }
 
-  void applySpecial() {
+  void applySpecial(Enemy enemy) {
     //TODO add ice picture over enemy to indicate frozen-ness
-    //Frozen-ness does not allow tower to continue attacking the enemies. Potental problem with multiple enemies?
     tick = 0;
     fTimer.start();
-    e.freeze();
+    enemy.freeze();
+  }
+
+  void noSpecial(Enemy enemy) {
+    enemy.unFreeze();
   }
 }

@@ -13,20 +13,21 @@ class MageTower extends Tower {
     super.tower = loadImage("towerImages/magicTower.png");
   }
 
-  void attack() {
-    e.health -= damage;
+  void attack(Enemy enemy) {
+    enemy.health -= damage;
     tick++;
-    println(" attacked " + tick + " health " + e.health);
-    if (tick >= 2) {
-      applySpecial();
-      tick = 0;
-    }
+    println(" attacked " + tick + " health " + enemy.health + " damage " + damage);
   }
 
-  void applySpecial() {
-    println("Mage Special");
+  void applySpecial(Enemy enemy) {
+    //TODO add spell auora picture over enemy to indicate extra damage taken
+    tick = 0;
+    mageTimer.start();
     damage += extraDamage;
-    delay(5000);
+    println("special damage: " + damage);
+  }
+  void noSpecial(Enemy enemy) {
     damage = 15;
+    println("noSpecial: damage " + damage);
   }
 }
