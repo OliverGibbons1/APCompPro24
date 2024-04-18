@@ -6,19 +6,20 @@
 // make checks for enemy movement (recursive); make enemy movement;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
-// LAST SESSION: debug e.remove and fix freeze method on iceTower
 
 private int money, round, life, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton, saveGameButton, nextRound;
+Button t1, t2, t3, t4, t5;
+Button fireSelect, mageSelect, iceSelect, background;
 JSONObject saveGame;
-private boolean savedGame, play, first;
-//public static boolean move;
+private boolean savedGame, play, first, hasPlacedTower;
 int mapWidth = 640;
 int mapHeight = 640;
+int tileW = 64;
 ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 ArrayList<Enemy> eToRemove = new ArrayList<Enemy>();
-Tower t;
+ArrayList<Tower> towers = new ArrayList<Tower>(); // Changed name to 'towers'
 Timer attackTimer;
 
 private String s = "Start";
@@ -26,6 +27,8 @@ private String q = "Quit";
 private String l = "Load Game";
 private String c = "Clear Save";
 private String i = " ";
+
+
 
 void setup() {
   m = new Map();
@@ -36,10 +39,11 @@ void setup() {
   enemyCount = 0;
   first = true;
   play = false;
-  //move = true;
+  hasPlacedTower = false;
 
   saveGame = new JSONObject();
 
+  // Start button initialization
   startButton = new Button(mapWidth/6, mapHeight/3.5, 112, 48);
   quitButton = new Button(mapWidth/2, 3*(mapHeight/4) + 20, 140, 60);
   loadGameButton = new Button((mapWidth/6)*5, mapHeight/3.5, 112, 48);
@@ -47,7 +51,6 @@ void setup() {
   saveGameButton = new Button(((mapWidth/5) * 4) + 20, 32, 128, 32);
   nextRound = new Button(mapHeight / 2, mapWidth / 2, 300, 300);
 
-  t = new FireTower(96, 416);
   attackTimer = new Timer(1000);
 }
 
@@ -57,8 +60,9 @@ void draw() {
   textMode(CENTER);
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
-  //Startscreen--------------------------------------------------
+  //Startscreen-----------------------------------------------------------------------------------
   if (!play && first) {
+    // Display start screen elements
     m.displaySSMap();
     noFill();
     stroke(0);
@@ -67,8 +71,8 @@ void draw() {
     quitButton.display();
     loadGameButton.display();
     clearSaveButton.display();
-    //Starting buttons
 
+    // Display start screen text
     textSize(22);
     text(s, startButton.x, startButton.y);
     text(q, quitButton.x, quitButton.y);
@@ -77,6 +81,7 @@ void draw() {
     text(c, clearSaveButton.x, clearSaveButton.y);
     fill(0);
 
+    // Check for button presses
     if (startButton.pressed()) {
       play = true;
       first = false;
@@ -97,81 +102,86 @@ void draw() {
         first = false;
       }
     }
-    if (quitButton.pressed()) {
+    if (quitButton.pressed())
       exit();
-    }
-    if (clearSaveButton.pressed()) {
+    if (clearSaveButton.pressed())
       clearSave();
-    }
   }
-  //Start of play------------------------------------------------------
+  //Start of play--------------------------------------------------------------------------------
   if (play) {
     m.displayPlayMap();
-    t.display();
     infoBar();
 
-    //Temporary; eventually check to see that all towers are placed prior to starting
-    if (enemy.size() == 0) {
-      nextRoundHandle();
+    if (!hasPlacedTower) {
+      selectTower();
     }
 
-    //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
-    for (int j = enemy.size() - 1; j >= 0; j--) {
-      Enemy e = enemy.get(j);
-      e.display();
-      e.move();
+    if (hasPlacedTower) {
+      //Temporary; eventually check to see that all towers are placed prior to starting
+      if (enemy.size() == 0)
+        nextRoundHandle();
 
-      // attack if in range and if timer is finished
-      if (t.inRange(e)) {
-        if (!attackTimer.isStarted()) {
-          attackTimer.start();
-          println("Started");
-        } else if (attackTimer.isFinished()) {
-          // If attackTimer is finished, reset it and perform attack
-          attackTimer.start(); // Reset the timer
-          t.attack(e);
+      //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
+      for (int j = enemy.size() - 1; j >= 0; j--) {
+        for (Tower t : towers) { // Loop through all towers
+          Enemy e = enemy.get(j);
+          e.display();
+          e.move();
+          t.display();
+
+          // attack if in range and if timer is finished
+          if (t.inRange(e)) {
+            if (!attackTimer.isStarted()) {
+              attackTimer.start();
+              println("Started");
+            } else if (attackTimer.isFinished()) {
+              // If attackTimer is finished, reset it and perform attack
+              attackTimer.start(); // Reset the timer
+              t.attack(e);
+            }
+          }
+
+          if (t.tick >= 3) {
+            t.applySpecial(e);
+          }
+
+          if (t.fTimer.isStarted() && t.fTimer.isFinished())
+            t.noSpecial(e);
+          if (t.mageTimer.isStarted() && t.mageTimer.isFinished())
+            t.noSpecial(e);
+          if (t.fireTimer.isStarted() && t.fireTimer.isFinished())
+            t.noSpecial(e);
+          if (t.burnTimer.isStarted() && !t.fireTimer.isFinished())
+            t.burn(e);
+          if (!e.l()) {
+            println("removed ");
+            money += e.rewardMoney;
+            eToRemove.add(e);
+          }
+
+          //Counting
+          if (e.passX()) {
+            println("Pass X");
+            enemyCount++;
+            life -= enemyCount; //ToDo health -= enemy.y like rocks;
+            eToRemove.add(e);
+          }
+
+          // Remove marked enemies
+          for (Enemy en : eToRemove) {
+            enemy.remove(en);
+          }
+          eToRemove.clear(); // Clear the list for the next frame
         }
       }
-
-      if (t.tick >= 3) {
-        t.applySpecial(e);
+      //Game Over logic
+      if (checkGameOver()) {
+        m.displayEndMap();
+        play = false;
       }
-
-      if (t.fTimer.isStarted() && t.fTimer.isFinished())
-        t.noSpecial(e);
-      if (t.mageTimer.isStarted() && t.mageTimer.isFinished())
-        t.noSpecial(e);
-      if (t.fireTimer.isStarted() && t.fireTimer.isFinished())
-        t.noSpecial(e);
-      if (t.burnTimer.isStarted() && !t.fireTimer.isFinished())
-        t.burn(e);
-      if (!e.l()) {
-        println("removed ");
-        money += e.rewardMoney;
-        eToRemove.add(e);
-      }
-      //Counting
-      if (e.passX()) {
-        println("Pass X");
-        enemyCount++;
-        life -= enemyCount; //ToDo health -= enemy.y like rocks;
-        eToRemove.add(e);
-      }
-
-      // Remove marked enemies
-      for (Enemy en : eToRemove) {
-        enemy.remove(en);
-      }
-      eToRemove.clear(); // Clear the list for the next frame
-    }
-    //Game Over logic
-    if (checkGameOver()) {
-      m.displayEndMap();
-      play = false;
     }
   }
 }
-
 
 void nextRoundHandle() {
   nextRound.x = mapWidth / 2; // Centering the button horizontally
@@ -236,4 +246,96 @@ void infoBar() {
   if (saveGameButton.pressed()) {
     saveGame();
   }
+}
+
+void selectTower() {
+  //instructions on how to select towers later, GUI
+
+  // Tower button initialization
+  t1 = new Button(1 * tileW + tileW/2, 6 * tileW + tileW/2, tileW, tileW);
+  t2 = new Button(3 * tileW + tileW/2, 1 * tileW + tileW/2, tileW, tileW);
+  t3 = new Button(7 * tileW + tileW/2, 4 * tileW + tileW/2, tileW, tileW);
+  t4 = new Button(6 * tileW + tileW/2, 7 * tileW + tileW/2, tileW, tileW);
+  t5 = new Button(4 * tileW + tileW/2, 4 * tileW + tileW/2, tileW, tileW);
+
+  t1.display();
+  t2.display();
+  t3.display();
+  t4.display();
+  t5.display();
+
+  if (t1.pressed()) {
+    optionWindow(t1.getX(), t1.getY());
+  }
+  if (t2.pressed()) {
+    optionWindow(t2.getX(), t2.getY());
+  }
+  if (t3.pressed()) {
+    optionWindow(t3.getX(), t3.getY());
+  }
+  if (t4.pressed()) {
+    optionWindow(t4.getX(), t4.getY());
+  }
+  if (t5.pressed()) {
+    optionWindow(t5.getX(), t5.getY());
+  }
+
+  //  Tower firstTower = new FireTower(96, 416);
+  //  towers.add(firstTower);
+}
+
+void optionWindow(float buttonX, float buttonY) {
+  float windowWidth = 190; // Adjusted width to frame the buttons
+  float windowHeight = 100;
+  float windowX = constrain(buttonX - windowWidth / 2, 0, width - windowWidth);
+  float windowY = buttonY - windowHeight - 50;
+
+  // Draw the window background
+  background = new Button(windowX + windowWidth / 2, windowY + windowHeight / 2, windowWidth, windowHeight);
+  background.display();
+
+  // Calculate button positions relative to the window
+  float buttonSize = 40;
+  float buttonSpacing = (windowWidth - buttonSize * 3) / 4;
+  float buttonYPos = windowY + (windowWidth / 4);
+
+  // Draw the buttons inside the window
+  fireSelect = new Button(windowX + buttonSpacing + buttonSize / 2, buttonYPos, buttonSize, buttonSize);
+  mageSelect = new Button(windowX + 2 * buttonSpacing + 1.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
+  iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
+  fireSelect.display();
+  mageSelect.display();
+  iceSelect.display();
+
+  // Handle button presses
+  if (fireSelect.pressed()) {
+    Tower fireTower = new FireTower(mouseX, mouseY);
+    towers.add(fireTower);
+    fireSelect.remove();
+    mageSelect.remove();
+    iceSelect.remove();
+    background.remove();
+    hasPlacedTower = true;
+  } else if (mageSelect.pressed()) {
+    Tower mageTower = new MageTower(mouseX, mouseY);
+    towers.add(mageTower);
+    fireSelect.remove();
+    mageSelect.remove();
+    iceSelect.remove();
+    background.remove();
+    hasPlacedTower = true;
+  } else if (iceSelect.pressed()) {
+    Tower iceTower = new IceTower(mouseX, mouseY);
+    towers.add(iceTower);
+    fireSelect.remove();
+    mageSelect.remove();
+    iceSelect.remove();
+    background.remove();
+    hasPlacedTower = true;
+  }
+
+  // Remove the buttons and the window
+  t1.remove();
+  t2.remove();
+  t3.remove();
 }

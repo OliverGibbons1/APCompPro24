@@ -24,4 +24,11 @@ class Button {
     width = 0;
     height = 0;
   }
+
+  float getX() {
+    return x;
+  }
+  float getY() {
+    return y;
+  }
 }
