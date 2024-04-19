@@ -316,44 +316,48 @@ void optionWindow(float buttonX, float buttonY) {
     iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
   }
 
-  background.display();
-  fireSelect.display();
-  mageSelect.display();
-  iceSelect.display();
+
 
   // Handle button presses and remove buttons and window
-  do {
-  if (fireSelect.pressed() || mageSelect.pressed() || iceSelect.pressed()) {
-    if (fireSelect.pressed()) {
-      Tower fireTower = new FireTower(mouseX, mouseY);
-      towers.add(fireTower);
-      finishedSelection = true;
-    } else if (mageSelect.pressed()) {
-      Tower mageTower = new MageTower(mouseX, mouseY);
-      towers.add(mageTower);
-      finishedSelection = true;
-    } else if (iceSelect.pressed()) {
-      Tower iceTower = new IceTower(mouseX, mouseY);
-      towers.add(iceTower);
-      finishedSelection = true;
+  if (!finishedSelection) {
+    background.display();
+    fireSelect.display();
+    mageSelect.display();
+    iceSelect.display();
+    if (fireSelect.pressed() || mageSelect.pressed() || iceSelect.pressed()) {
+      if (fireSelect.pressed()) {
+        Tower fireTower = new FireTower(mouseX, mouseY);
+        towers.add(fireTower);
+        finishedSelection = true;
+      } else if (mageSelect.pressed()) {
+        Tower mageTower = new MageTower(mouseX, mouseY);
+        towers.add(mageTower);
+        finishedSelection = true;
+      } else if (iceSelect.pressed()) {
+        Tower iceTower = new IceTower(mouseX, mouseY);
+        towers.add(iceTower);
+        finishedSelection = true;
+      }
+      fireSelect.remove();
+      mageSelect.remove();
+      iceSelect.remove();
+      background.remove();
+    } else if (anotherButtonPressed()) {
+      fireSelect.remove();
+      mageSelect.remove();
+      iceSelect.remove();
+      background.remove();
+      finishedSelection = true; // Reset optionWindowActive
     }
-    fireSelect.remove();
-    mageSelect.remove();
-    iceSelect.remove();
-    background.remove();
-  } else if (anotherButtonPressed()) {
-    fireSelect.remove();
-    mageSelect.remove();
-    iceSelect.remove();
-    background.remove();
-    finishedSelection = true; // Reset optionWindowActive
   }
-  } while (!finishedSelection);
+  if (finishedSelection) {
+    t1.remove();
+    t2.remove();
+    t3.remove();
 
-  t1.remove();
-  t2.remove();
-  t3.remove();
-  //hasPlacedTower = true;
+    if (t1.isRemoved() && t2.isRemoved() && t1.isRemoved() && t1.isRemoved() && t1.isRemoved())
+      hasPlacedTower = true;
+  }
 }
 
 boolean anotherButtonPressed() {

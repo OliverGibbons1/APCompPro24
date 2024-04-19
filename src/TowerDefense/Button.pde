@@ -1,11 +1,13 @@
 class Button {
   float x, y, width, height;
+  boolean removeT;
 
   Button(float x, float y, float width, float height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    removeT = false;
   }
 
   void display() {
@@ -23,6 +25,7 @@ class Button {
     y = 640;
     width = 0;
     height = 0;
+    removeT = true;
   }
 
   float getX() {
@@ -30,5 +33,8 @@ class Button {
   }
   float getY() {
     return y;
+  }
+  boolean isRemoved() {
+    return removeT;
   }
 }
