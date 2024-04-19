@@ -1,8 +1,9 @@
 //Oliver Gibbons | March 2024
 
 // TO DO:
+// Fix tower button staying
 // applySpecial() effects (freeze cube, fire animation)
-// Make buttons out of tower spots; tower placement; make checks for tower placement;
+// Make checks for tower placement;
 // make checks for enemy movement (recursive); make enemy movement;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
@@ -28,7 +29,7 @@ private String l = "Load Game";
 private String c = "Clear Save";
 private String i = " ";
 
-
+boolean t2Pressed, finishedSelection;
 
 void setup() {
   m = new Map();
@@ -264,10 +265,12 @@ void selectTower() {
   t4.display();
   t5.display();
 
+
   if (t1.pressed()) {
     optionWindow(t1.getX(), t1.getY());
   }
   if (t2.pressed()) {
+    t2Pressed = true;
     optionWindow(t2.getX(), t2.getY());
   }
   if (t3.pressed()) {
@@ -285,57 +288,74 @@ void selectTower() {
 }
 
 void optionWindow(float buttonX, float buttonY) {
-  float windowWidth = 190; // Adjusted width to frame the buttons
+
+  finishedSelection = false;
+
+  float windowWidth = 190;
   float windowHeight = 100;
   float windowX = constrain(buttonX - windowWidth / 2, 0, width - windowWidth);
   float windowY = buttonY - windowHeight - 50;
-
-  // Draw the window background
-  background = new Button(windowX + windowWidth / 2, windowY + windowHeight / 2, windowWidth, windowHeight);
-  background.display();
+  float windowYBelow = buttonY + 50;
 
   // Calculate button positions relative to the window
   float buttonSize = 40;
   float buttonSpacing = (windowWidth - buttonSize * 3) / 4;
   float buttonYPos = windowY + (windowWidth / 4);
 
-  // Draw the buttons inside the window
-  fireSelect = new Button(windowX + buttonSpacing + buttonSize / 2, buttonYPos, buttonSize, buttonSize);
-  mageSelect = new Button(windowX + 2 * buttonSpacing + 1.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
-  iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
+  // Draw the window background
+  if (t2Pressed) {
+    background = new Button(windowX + windowWidth / 2, windowYBelow + windowHeight / 2, windowWidth, windowHeight);
+    fireSelect = new Button(windowX + buttonSpacing + buttonSize / 2, windowYBelow + windowHeight / 1.5 - buttonSize / 2, buttonSize, buttonSize);
+    mageSelect = new Button(windowX + 2 * buttonSpacing + 1.5 * buttonSize, windowYBelow + windowHeight / 1.5 - buttonSize / 2, buttonSize, buttonSize);
+    iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, windowYBelow + windowHeight / 1.5 - buttonSize / 2, buttonSize, buttonSize);
+    t2Pressed = false;
+  } else {
+    background = new Button(windowX + windowWidth / 2, windowY + windowHeight / 2, windowWidth, windowHeight);
+    fireSelect = new Button(windowX + buttonSpacing + buttonSize / 2, buttonYPos, buttonSize, buttonSize);
+    mageSelect = new Button(windowX + 2 * buttonSpacing + 1.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
+    iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
+  }
+
+  background.display();
   fireSelect.display();
   mageSelect.display();
   iceSelect.display();
 
-  // Handle button presses
-  if (fireSelect.pressed()) {
-    Tower fireTower = new FireTower(mouseX, mouseY);
-    towers.add(fireTower);
+  // Handle button presses and remove buttons and window
+  do {
+  if (fireSelect.pressed() || mageSelect.pressed() || iceSelect.pressed()) {
+    if (fireSelect.pressed()) {
+      Tower fireTower = new FireTower(mouseX, mouseY);
+      towers.add(fireTower);
+      finishedSelection = true;
+    } else if (mageSelect.pressed()) {
+      Tower mageTower = new MageTower(mouseX, mouseY);
+      towers.add(mageTower);
+      finishedSelection = true;
+    } else if (iceSelect.pressed()) {
+      Tower iceTower = new IceTower(mouseX, mouseY);
+      towers.add(iceTower);
+      finishedSelection = true;
+    }
     fireSelect.remove();
     mageSelect.remove();
     iceSelect.remove();
     background.remove();
-    hasPlacedTower = true;
-  } else if (mageSelect.pressed()) {
-    Tower mageTower = new MageTower(mouseX, mouseY);
-    towers.add(mageTower);
+  } else if (anotherButtonPressed()) {
     fireSelect.remove();
     mageSelect.remove();
     iceSelect.remove();
     background.remove();
-    hasPlacedTower = true;
-  } else if (iceSelect.pressed()) {
-    Tower iceTower = new IceTower(mouseX, mouseY);
-    towers.add(iceTower);
-    fireSelect.remove();
-    mageSelect.remove();
-    iceSelect.remove();
-    background.remove();
-    hasPlacedTower = true;
+    finishedSelection = true; // Reset optionWindowActive
   }
+  } while (!finishedSelection);
 
-  // Remove the buttons and the window
   t1.remove();
   t2.remove();
   t3.remove();
+  //hasPlacedTower = true;
+}
+
+boolean anotherButtonPressed() {
+  return (t1.pressed() || t2.pressed() || t3.pressed() || t4.pressed() || t5.pressed());
 }

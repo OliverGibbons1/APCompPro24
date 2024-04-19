@@ -30,28 +30,15 @@ class Enemy {
   }
 
   boolean passY() {
-    if (y > (height + 40)) {
-      return true;
-    } else {
-      return false;
-    }
+    return y > (height + 40);
   }
 
   //testing only
   boolean passX() {
-    if (x > (width + 40)) {
-      return true;
-    } else {
-      return false;
-    }
+    return x > (width + 40);
   }
   boolean l() {
-    if (health >= 0)
-    {
-      return true;
-    } else {
-      return false;
-    }
+    return health >= 0;
   }
   void freeze() {
     frozen = true;
