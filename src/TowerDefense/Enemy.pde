@@ -42,9 +42,11 @@ class Enemy {
   }
   void freeze() {
     frozen = true;
+    enemy = loadImage("towerImages/enemy frozen.png");
   }
   void unFreeze() {
     frozen = false;
     println("Freeze finished: speed " + speed);
+    enemy = loadImage("towerImages/enemy.png");
   }
 }
