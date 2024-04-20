@@ -30,6 +30,5 @@ class MageTower extends Tower {
   void noSpecial(Enemy enemy) {
     damage = 15;
     println("noSpecial: damage " + damage);
-    enemy.enemy = loadImage("towerImages/enemy fire.png");
   }
 }

@@ -7,6 +7,7 @@
 // make checks for enemy movement (recursive); make enemy movement;
 // mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
+// Once finished, extract attack() into tower class (take out print checks)
 
 private int money, round, life, enemyCount;
 Map m;
