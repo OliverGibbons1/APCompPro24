@@ -24,3 +24,5 @@ Apr/16/2024 - Fixes to range; more work on freezeSpecial() method in iceTower.
 Apr/17/2024 - Specials fixed for iceTower. Special added for mageTower. Special added to fireTower. Enemy remove method fixed. Methods for start-of-game tower additions created (selectTower and optionWindow methods created). Loads of GUI for start-of-game tower selection created. ApplySpecial() images created and added.
 
 Apr/18/2024 - GUI fixes for start-of-game tower selection. 
+
+Apr/19/2024 - ApplySpecial() images created and added.
