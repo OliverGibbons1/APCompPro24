@@ -267,6 +267,7 @@ void selectTower() {
 
 
   if (t1.pressed()) {
+    print("t1");
     optionWindow(t1.getX(), t1.getY());
   }
   if (t2.pressed()) {
@@ -316,38 +317,39 @@ void optionWindow(float buttonX, float buttonY) {
     iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
   }
 
-  background.display();
-  fireSelect.display();
-  mageSelect.display();
-  iceSelect.display();
+
 
   // Handle button presses and remove buttons and window
   do {
-  if (fireSelect.pressed() || mageSelect.pressed() || iceSelect.pressed()) {
-    if (fireSelect.pressed()) {
-      Tower fireTower = new FireTower(mouseX, mouseY);
-      towers.add(fireTower);
-      finishedSelection = true;
-    } else if (mageSelect.pressed()) {
-      Tower mageTower = new MageTower(mouseX, mouseY);
-      towers.add(mageTower);
-      finishedSelection = true;
-    } else if (iceSelect.pressed()) {
-      Tower iceTower = new IceTower(mouseX, mouseY);
-      towers.add(iceTower);
-      finishedSelection = true;
+    background.display();
+    fireSelect.display();
+    mageSelect.display();
+    iceSelect.display();
+    if (fireSelect.pressed() || mageSelect.pressed() || iceSelect.pressed()) {
+      if (fireSelect.pressed()) {
+        Tower fireTower = new FireTower(mouseX, mouseY);
+        towers.add(fireTower);
+        finishedSelection = true;
+      } else if (mageSelect.pressed()) {
+        Tower mageTower = new MageTower(mouseX, mouseY);
+        towers.add(mageTower);
+        finishedSelection = true;
+      } else if (iceSelect.pressed()) {
+        Tower iceTower = new IceTower(mouseX, mouseY);
+        towers.add(iceTower);
+        finishedSelection = true;
+      }
+      fireSelect.remove();
+      mageSelect.remove();
+      iceSelect.remove();
+      background.remove();
+    } else if (anotherButtonPressed()) {
+      fireSelect.remove();
+      mageSelect.remove();
+      iceSelect.remove();
+      background.remove();
+      finishedSelection = true; // Reset optionWindowActive
     }
-    fireSelect.remove();
-    mageSelect.remove();
-    iceSelect.remove();
-    background.remove();
-  } else if (anotherButtonPressed()) {
-    fireSelect.remove();
-    mageSelect.remove();
-    iceSelect.remove();
-    background.remove();
-    finishedSelection = true; // Reset optionWindowActive
-  }
   } while (!finishedSelection);
 
   t1.remove();
