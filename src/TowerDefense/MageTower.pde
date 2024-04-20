@@ -25,9 +25,11 @@ class MageTower extends Tower {
     mageTimer.start();
     damage += extraDamage;
     println("special damage: " + damage);
+    enemy.enemy = loadImage("towerImages/enemy cursed.png");
   }
   void noSpecial(Enemy enemy) {
     damage = 15;
     println("noSpecial: damage " + damage);
+    enemy.enemy = loadImage("towerImages/enemy fire.png");
   }
 }
