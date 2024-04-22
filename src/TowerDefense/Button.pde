@@ -1,11 +1,13 @@
 class Button {
   float x, y, width, height;
+  boolean hasPressed;
 
   Button(float x, float y, float width, float height) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    hasPressed = false;
   }
 
   void display() {
@@ -13,6 +15,8 @@ class Button {
   }
 
   boolean pressed() {
+    hasPressed = true;
+
     return mouseX >= x - width/2 && mouseX <= x + width/2 &&
       mouseY >= y - height/2 && mouseY <= y + height/2 &&
       mousePressed;

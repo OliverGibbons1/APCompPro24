@@ -111,11 +111,58 @@ void draw() {
   }
   //Start of play--------------------------------------------------------------------------------
   if (play) {
-    m.displayPlayMap();
     infoBar();
 
     if (!hasPlacedTower) {
+      m.displayPlayMap();
       selectTower();
+
+      if (t1.pressed()) {
+        print("t1");
+        optionWindow(t1.getX(), t1.getY());
+
+        // Handle button presses and remove buttons and window
+        background.display();
+        fireSelect.display();
+        mageSelect.display();
+        iceSelect.display();
+        if (fireSelect.pressed()) {
+          Tower fireTower = new FireTower(mouseX, mouseY);
+          towers.add(fireTower);
+          finishedSelection = true;
+        }
+        if (mageSelect.pressed()) {
+          Tower mageTower = new MageTower(mouseX, mouseY);
+          towers.add(mageTower);
+          finishedSelection = true;
+        }
+        if (iceSelect.pressed()) {
+          Tower iceTower = new IceTower(mouseX, mouseY);
+          towers.add(iceTower);
+          finishedSelection = true;
+        }
+        fireSelect.remove();
+        mageSelect.remove();
+        iceSelect.remove();
+        background.remove();
+
+        if (finishedSelection)
+          t1.remove();
+        //hasPlacedTower = true;
+      }
+      if (t2.pressed()) {
+        t2Pressed = true;
+        optionWindow(t2.getX(), t2.getY());
+      }
+      if (t3.pressed()) {
+        optionWindow(t3.getX(), t3.getY());
+      }
+      if (t4.pressed()) {
+        optionWindow(t4.getX(), t4.getY());
+      }
+      if (t5.pressed()) {
+        optionWindow(t5.getX(), t5.getY());
+      }
     }
 
     if (hasPlacedTower) {
@@ -125,7 +172,7 @@ void draw() {
 
       //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
       for (int j = enemy.size() - 1; j >= 0; j--) {
-        for (Tower t : towers) { // Loop through all towers
+        for (Tower t : towers) {
           Enemy e = enemy.get(j);
           e.display();
           e.move();
@@ -266,25 +313,6 @@ void selectTower() {
   t4.display();
   t5.display();
 
-
-  if (t1.pressed()) {
-    print("t1");
-    optionWindow(t1.getX(), t1.getY());
-  }
-  if (t2.pressed()) {
-    t2Pressed = true;
-    optionWindow(t2.getX(), t2.getY());
-  }
-  if (t3.pressed()) {
-    optionWindow(t3.getX(), t3.getY());
-  }
-  if (t4.pressed()) {
-    optionWindow(t4.getX(), t4.getY());
-  }
-  if (t5.pressed()) {
-    optionWindow(t5.getX(), t5.getY());
-  }
-
   //  Tower firstTower = new FireTower(96, 416);
   //  towers.add(firstTower);
 }
@@ -317,46 +345,6 @@ void optionWindow(float buttonX, float buttonY) {
     mageSelect = new Button(windowX + 2 * buttonSpacing + 1.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
     iceSelect = new Button(windowX + 3 * buttonSpacing + 2.5 * buttonSize, buttonYPos, buttonSize, buttonSize);
   }
-
-
-
-  // Handle button presses and remove buttons and window
-  do {
-    background.display();
-    fireSelect.display();
-    mageSelect.display();
-    iceSelect.display();
-    if (fireSelect.pressed() || mageSelect.pressed() || iceSelect.pressed()) {
-      if (fireSelect.pressed()) {
-        Tower fireTower = new FireTower(mouseX, mouseY);
-        towers.add(fireTower);
-        finishedSelection = true;
-      } else if (mageSelect.pressed()) {
-        Tower mageTower = new MageTower(mouseX, mouseY);
-        towers.add(mageTower);
-        finishedSelection = true;
-      } else if (iceSelect.pressed()) {
-        Tower iceTower = new IceTower(mouseX, mouseY);
-        towers.add(iceTower);
-        finishedSelection = true;
-      }
-      fireSelect.remove();
-      mageSelect.remove();
-      iceSelect.remove();
-      background.remove();
-    } else if (anotherButtonPressed()) {
-      fireSelect.remove();
-      mageSelect.remove();
-      iceSelect.remove();
-      background.remove();
-      finishedSelection = true; // Reset optionWindowActive
-    }
-  } while (!finishedSelection);
-
-  t1.remove();
-  t2.remove();
-  t3.remove();
-  //hasPlacedTower = true;
 }
 
 boolean anotherButtonPressed() {
