@@ -2,10 +2,8 @@
 
 // TO DO:
 // Fix tower button staying
-// applySpecial() effects (freeze cube, fire animation)
 // Make checks for tower placement;
 // make checks for enemy movement (recursive); make enemy movement;
-// mostly tower and enemy, map set up
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
 // Once finished, extract attack() into tower class (take out print checks)
 
