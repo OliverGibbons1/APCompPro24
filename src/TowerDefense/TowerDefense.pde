@@ -109,59 +109,65 @@ void draw() {
   }
   //Start of play--------------------------------------------------------------------------------
   if (play) {
+    m.displayPlayMap();
     infoBar();
-
-    if (!hasPlacedTower) {
-      m.displayPlayMap();
-      selectTower();
-
-      if (t1.pressed()) {
-        print("t1");
-        optionWindow(t1.getX(), t1.getY());
-
-        // Handle button presses and remove buttons and window
-        background.display();
-        fireSelect.display();
-        mageSelect.display();
-        iceSelect.display();
-        if (fireSelect.pressed()) {
-          Tower fireTower = new FireTower(mouseX, mouseY);
-          towers.add(fireTower);
-          finishedSelection = true;
-        }
-        if (mageSelect.pressed()) {
-          Tower mageTower = new MageTower(mouseX, mouseY);
-          towers.add(mageTower);
-          finishedSelection = true;
-        }
-        if (iceSelect.pressed()) {
-          Tower iceTower = new IceTower(mouseX, mouseY);
-          towers.add(iceTower);
-          finishedSelection = true;
-        }
-        fireSelect.remove();
-        mageSelect.remove();
-        iceSelect.remove();
-        background.remove();
-
-        if (finishedSelection)
-          t1.remove();
-        //hasPlacedTower = true;
-      }
-      if (t2.pressed()) {
-        t2Pressed = true;
-        optionWindow(t2.getX(), t2.getY());
-      }
-      if (t3.pressed()) {
-        optionWindow(t3.getX(), t3.getY());
-      }
-      if (t4.pressed()) {
-        optionWindow(t4.getX(), t4.getY());
-      }
-      if (t5.pressed()) {
-        optionWindow(t5.getX(), t5.getY());
-      }
+    selectTower();
+    if (t1.hasPressed) {
+      optionWindow(t1.getX(), t1.getY());
+      background.display();
+      fireSelect.display();
+      mageSelect.display();
+      iceSelect.display();
     }
+    //if (!hasPlacedTower) {
+
+    //  if (t1.pressed()) {
+    //    print("t1");
+
+
+    //    // Handle button presses and remove buttons and window
+    //    background.display();
+    //    fireSelect.display();
+    //    mageSelect.display();
+    //    iceSelect.display();
+    //    if (fireSelect.pressed()) {
+    //      Tower fireTower = new FireTower(mouseX, mouseY);
+    //      towers.add(fireTower);
+    //      finishedSelection = true;
+    //    }
+    //    if (mageSelect.pressed()) {
+    //      Tower mageTower = new MageTower(mouseX, mouseY);
+    //      towers.add(mageTower);
+    //      finishedSelection = true;
+    //    }
+    //    if (iceSelect.pressed()) {
+    //      Tower iceTower = new IceTower(mouseX, mouseY);
+    //      towers.add(iceTower);
+    //      finishedSelection = true;
+    //    }
+    //    fireSelect.remove();
+    //    mageSelect.remove();
+    //    iceSelect.remove();
+    //    background.remove();
+
+    //    if (finishedSelection)
+    //      t1.remove();
+    //    //hasPlacedTower = true;
+    //  }
+    //  if (t2.pressed()) {
+    //    t2Pressed = true;
+    //    optionWindow(t2.getX(), t2.getY());
+    //  }
+    //  if (t3.pressed()) {
+    //    optionWindow(t3.getX(), t3.getY());
+    //  }
+    //  if (t4.pressed()) {
+    //    optionWindow(t4.getX(), t4.getY());
+    //  }
+    //  if (t5.pressed()) {
+    //    optionWindow(t5.getX(), t5.getY());
+    //  }
+    //}
 
     if (hasPlacedTower) {
       //Temporary; eventually check to see that all towers are placed prior to starting
@@ -317,7 +323,7 @@ void selectTower() {
 
 void optionWindow(float buttonX, float buttonY) {
 
-  finishedSelection = false;
+  //finishedSelection = false;
 
   float windowWidth = 190;
   float windowHeight = 100;
@@ -345,6 +351,6 @@ void optionWindow(float buttonX, float buttonY) {
   }
 }
 
-boolean anotherButtonPressed() {
-  return (t1.pressed() || t2.pressed() || t3.pressed() || t4.pressed() || t5.pressed());
-}
+//boolean anotherButtonPressed() {
+//  return (t1.pressed() || t2.pressed() || t3.pressed() || t4.pressed() || t5.pressed());
+//}
