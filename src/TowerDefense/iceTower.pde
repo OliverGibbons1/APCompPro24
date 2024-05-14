@@ -2,7 +2,7 @@ class IceTower extends Tower {
 
   int freezeTime = 2000;
 
-  IceTower (int x, int y) {
+  IceTower (float x, float y) {
     super.delay = freezeTime;
     super.x = x;
     super.y = y;

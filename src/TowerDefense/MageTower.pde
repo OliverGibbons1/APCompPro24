@@ -3,7 +3,7 @@ class MageTower extends Tower {
   int extraDamage;
   PImage mageTower;
 
-  MageTower (int x, int y) {
+  MageTower (float x, float y) {
     extraDamage = 20;
     super.x = x;
     super.y = y;

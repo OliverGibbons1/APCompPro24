@@ -163,11 +163,4 @@ class Map {
   //    return false;
   //  }
   //}
-
-  boolean canPlaceTower(int tile, int x, int y) {
-    if (tile == 2) {
-      return true;
-    }
-    return false;
-  }
 }

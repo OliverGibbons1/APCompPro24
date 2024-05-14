@@ -4,7 +4,7 @@ class FireTower extends Tower {
   PImage fireTower;
   boolean onFire;
 
-  FireTower (int x, int y) {
+  FireTower (float x, float y) {
     passiveDamage = 5;
     super.x = x;
     super.y = y;

@@ -1,6 +1,6 @@
 {
-  "savedGame": true,
-  "money": 500,
+  "savedGame": false,
+  "money": 0,
   "round": 0,
-  "life": 100
+  "health": 0
 }
