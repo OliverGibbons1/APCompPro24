@@ -9,7 +9,7 @@ class MageTower extends Tower {
     super.y = y;
     super.cost = 150;
     super.damage = 15;
-    super.range = 500;
+    super.range = 400;
     super.tower = loadImage("towerImages/magicTower.png");
   }
 

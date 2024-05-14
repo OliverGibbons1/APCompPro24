@@ -44,12 +44,7 @@ abstract class Tower {
   void upgrade() {
   }
 
-  void getCost() {
-  }
-
-  void getRange() {
-  }
-
-  void getDamage() {
+  int getCost() {
+    return cost;
   }
 }

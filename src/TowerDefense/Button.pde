@@ -35,4 +35,10 @@ class Button {
   float getY() {
     return y;
   }
+  float getW() {
+    return width;
+  }
+  float getH() {
+    return height;
+  }
 }

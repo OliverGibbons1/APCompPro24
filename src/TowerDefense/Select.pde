@@ -5,6 +5,7 @@ Button fireSelect, mageSelect, iceSelect, background;
 int tileW = 64;
 int count = 0;
 float currentButtonX, currentButtonY;
+PImage fire, ice, mage;
 class Select {
 
   Select() {
@@ -16,10 +17,20 @@ class Select {
     buttons[2] = new Button(7 * tileW + tileW/2, 4 * tileW + tileW/2, tileW, tileW);
     buttons[3] = new Button(6 * tileW + tileW/2, 7 * tileW + tileW/2, tileW, tileW);
     buttons[4] = new Button(4 * tileW + tileW/2, 4 * tileW + tileW/2, tileW, tileW);
+
+    fire = loadImage("towerImages/fireTower.png");
+    ice = loadImage("towerImages/iceTower.png");
+    mage = loadImage("towerImages/magicTower.png");
   }
 
   void display() {
     //instructions on how to select towers later, GUI
+    if (money <= 0) {
+      for (int i = 0; i < buttons.length; i++) {
+        buttons[i].remove();
+        count += 5;
+      }
+    }
     for (int i = 0; i < buttons.length; i++) {
       buttons[i].display();
 
@@ -28,6 +39,12 @@ class Select {
         fireSelect.display();
         mageSelect.display();
         iceSelect.display();
+        image(fire, fireSelect.getX(), fireSelect.getY());
+        fire.resize((int)fireSelect.getW(), (int)fireSelect.getH());
+        image(ice, iceSelect.getX(), iceSelect.getY());
+        ice.resize((int)iceSelect.getW(), (int)iceSelect.getH());
+        image(mage, mageSelect.getX(), mageSelect.getY());
+        mage.resize((int)mageSelect.getW(), (int)mageSelect.getH());
       }
     }
   }
@@ -47,24 +64,30 @@ class Select {
       if (pressedStates[i]) {
         if (fireSelect.pressed()) {
           Tower fireTower = new FireTower(currentButtonX, currentButtonY);
-          towers.add(fireTower);
+          if (money >= fireTower.getCost())
+            towers.add(fireTower);
           pressedStates[i] = false;
           buttons[i].remove();
           count++;
+          money -= fireTower.getCost();
         }
         if (mageSelect.pressed()) {
           Tower mageTower = new MageTower(currentButtonX, currentButtonY);
-          towers.add(mageTower);
+          if (money >= mageTower.getCost())
+            towers.add(mageTower);
           pressedStates[i] = false;
           buttons[i].remove();
           count++;
+          money -= mageTower.getCost();
         }
         if (iceSelect.pressed()) {
           Tower iceTower = new IceTower(currentButtonX, currentButtonY);
-          towers.add(iceTower);
+          if (money >= iceTower.getCost())
+            towers.add(iceTower);
           pressedStates[i] = false;
           buttons[i].remove();
           count++;
+          money -= iceTower.getCost();
         }
       }
     }
@@ -84,7 +107,7 @@ class Select {
     float buttonYPos = windowY + (windowWidth / 4);
 
     // Draw the window background
-    if (t2Pressed) {
+    if (pressedStates[1]) {
       background = new Button(windowX + windowWidth / 2, windowYBelow + windowHeight / 2, windowWidth, windowHeight);
       fireSelect = new Button(windowX + buttonSpacing + buttonSize / 2, windowYBelow + windowHeight / 1.5 - buttonSize / 2, buttonSize, buttonSize);
       mageSelect = new Button(windowX + 2 * buttonSpacing + 1.5 * buttonSize, windowYBelow + windowHeight / 1.5 - buttonSize / 2, buttonSize, buttonSize);
@@ -98,7 +121,7 @@ class Select {
   }
 
   boolean over() {
-    if (count == 5) {
+    if (count >= 5) {
       return true;
     } else {
       return false;
@@ -107,27 +130,27 @@ class Select {
 }
 
 
- // Reference just in case
-    //if (t2Pressed) {
-    //  if (fireSelect.pressed()) {
-    //    Tower fireTower = new FireTower(currentButtonX, currentButtonY);
-    //    towers.add(fireTower);
-    //    t2Pressed = false;
-    //    t2.remove();
-    //    count++;
-    //  }
-    //  if (mageSelect.pressed()) {
-    //    Tower mageTower = new MageTower(currentButtonX, currentButtonX);
-    //    towers.add(mageTower);
-    //    t2Pressed = false;
-    //    t2.remove();
-    //    count++;
-    //  }
-    //  if (iceSelect.pressed()) {
-    //    Tower iceTower = new IceTower(currentButtonX, currentButtonX);
-    //    towers.add(iceTower);
-    //    t2Pressed = false;
-    //    t2.remove();
-    //    count++;
-    //  }
-    //}
+// Reference just in case
+//if (t2Pressed) {
+//  if (fireSelect.pressed()) {
+//    Tower fireTower = new FireTower(currentButtonX, currentButtonY);
+//    towers.add(fireTower);
+//    t2Pressed = false;
+//    t2.remove();
+//    count++;
+//  }
+//  if (mageSelect.pressed()) {
+//    Tower mageTower = new MageTower(currentButtonX, currentButtonX);
+//    towers.add(mageTower);
+//    t2Pressed = false;
+//    t2.remove();
+//    count++;
+//  }
+//  if (iceSelect.pressed()) {
+//    Tower iceTower = new IceTower(currentButtonX, currentButtonX);
+//    towers.add(iceTower);
+//    t2Pressed = false;
+//    t2.remove();
+//    count++;
+//  }
+//}
