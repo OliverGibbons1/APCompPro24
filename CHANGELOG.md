@@ -26,3 +26,7 @@ Apr/17/2024 - Specials fixed for iceTower. Special added for mageTower. Special 
 Apr/18/2024 - GUI fixes for start-of-game tower selection. 
 
 Apr/19/2024 - ApplySpecial() images created and added.
+
+(Large break due to AP testing)
+
+May/13/2024 - Added Select class. Finished start-of-game tower selection logic. Boolean check for purchasing towers. Images added to start-of-game tower buttons. 
