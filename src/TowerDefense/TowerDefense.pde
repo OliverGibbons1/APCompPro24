@@ -10,7 +10,7 @@
 // Double special effect pic and logic? for fire and magic
 // Speed modification for freeze effect maybe?
 
-// Start screen message: description of each tower's special, descriptrion of enemy and levels. 
+// Start screen message: description of each tower's special, descriptrion of enemy and levels.
 //   Icetower will only work if no other special effect is invoked (burn != ice, mage != ice)
 //   Carful of overdraft fee
 //   Price of towers, range of towers, maybe extra screen for tower desc in infobar?
@@ -135,17 +135,17 @@ void displayStartScreen() {
 }
 
 void handleTowersAndEnemies() {
+  // Tower selection before the game starts
   select.display();
   select.finalSelection();
-  
+
   if (money < 0)
     money = 0;
 
-  for (Tower t : towers) {
+  for (Tower t : towers)
     t.display();
-  }
 
-  eToRemove.clear();
+  eToRemove.clear(); // This is where enemeies get put to be killed, removes posibility of CurrentModificationException
 
   for (int j = enemy.size() - 1; j >= 0; j--) {
     Enemy e = enemy.get(j);

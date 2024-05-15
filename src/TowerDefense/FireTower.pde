@@ -26,7 +26,6 @@ class FireTower extends Tower {
       burnTimer.start();
     }
     enemy.enemy = loadImage("towerImages/enemy fire.png");
-
   }
 
   void burn (Enemy enemy) {
@@ -39,7 +38,7 @@ class FireTower extends Tower {
   }
 
   void noSpecial(Enemy enemy) {
-    onFire = false;    
+    onFire = false;
     enemy.enemy = loadImage("towerImages/enemy.png");
   }
 }

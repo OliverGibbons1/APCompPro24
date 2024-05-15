@@ -9,7 +9,7 @@ class IceTower extends Tower {
     this.range = 200;
     this.delay = freezeTime;
     this.tower = loadImage("towerImages/iceTower.png");
-    
+
     // Initialize the fTimer after setting the delay
     this.fTimer = new Timer(this.delay);
   }
