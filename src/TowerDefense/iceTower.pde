@@ -17,7 +17,7 @@ class IceTower extends Tower {
   void attack(Enemy enemy) {
     enemy.health -= damage;
     tick++;
-    println("IceTower attacked, tick: " + tick + ", enemy health: " + enemy.health + ", enemy speed: " + enemy.speed);
+    println("IceTower attacked " + tick + " health " + enemy.health + " speed: " + enemy.speed);
   }
 
   void applySpecial(Enemy enemy) {
