@@ -19,7 +19,7 @@ private int money, round, life, enemyCount;
 Map m;
 Button startButton, quitButton, loadGameButton, clearSaveButton, saveGameButton, nextRound;
 JSONObject saveGame;
-private boolean savedGame, play, first;
+private boolean savedGame, play, first, ss;
 int mapWidth = 640;
 int mapHeight = 640;
 ArrayList<Enemy> enemy = new ArrayList<Enemy>();
@@ -43,6 +43,7 @@ void setup() {
   enemyCount = 0;
   first = true;
   play = false;
+  ss = false;
 
 
   saveGame = new JSONObject();
@@ -72,8 +73,16 @@ void draw() {
     displayStartScreen();
   }
 
+  if (play && ss) {
+    m.instructions();
+    if (m.done && m.t.isFinished()) {
+      println("finished");
+      ss = false;
+    }
+  }
+
   // Play mode
-  if (play) {
+  if (play && !ss) {
     m.displayPlayMap();
     infoBar();
     handleTowersAndEnemies();
@@ -115,6 +124,7 @@ void displayStartScreen() {
   if (startButton.pressed()) {
     play = true;
     first = false;
+    ss = true;
   }
   if (loadGameButton.pressed()) {
     play = true;

@@ -32,4 +32,8 @@ class IceTower extends Tower {
     enemy.unFreeze();
     enemy.clearSpecial();
   }
+  
+  int getFreezeTime() {
+    return freezeTime;
+  }
 }

@@ -1,8 +1,10 @@
 class Map {
   int [] [] grid;
-  int rows, cols, lastRow, lastCol, tile, tileSize;
+  int rows, cols, lastRow, lastCol, tileSize;
   PImage startScreen, endScreen, playScreen;
   PImage tile0, tile1, tile2;
+  boolean done;
+  Timer t;
 
   Map () {
     startScreen = loadImage("towerImages/startscreen.png");
@@ -17,16 +19,49 @@ class Map {
     grid = new int [10] [10];
     lastRow = grid.length - 1;
     lastCol = grid[0].length - 1;
-
-    for (int r = 0; r <= lastRow; r++) {
-      for (int c = 0; c <= lastCol; c++) {
-        tile = grid [r] [c];
-      }
-    }
+    done = false;
+    t = new Timer(500);
   }
+
   void displaySSMap() {
     image(startScreen, width/2, height/2);
     startScreen.resize(640, 640);
+  }
+  void instructions() {
+    Tower i = new IceTower(-50, -50);
+    Tower f = new FireTower(-50, -50);
+    Tower m = new MageTower(-50, -50);
+
+    Button ss = new Button(width/2, height/2, 640, 640);
+    ss.display();
+    String SSmessage = "Welcome to the game! To advance to the tower selection screen, press anywhere...";
+    String ins = "Before you go, here are some things to know:";
+    String ins1 = "There are three towers: ice, fire, and mage. Each is different in range, cost, and special.";
+    String ins2 = "Ice Tower: range - " + i.getRange() + " cost - " + i.getCost() + " special - freeze for 2 sec"; //+ i.getDelay();
+    String ins3 = "Fire Tower: range - " + f.getRange() + " cost - " + f.getCost() + " special - burn for 5 damage every 1/2 sec for 10 sec";
+    String ins4 = "Mage Tower: range - " + m.getRange() + " cost - " + m.getCost() + " special - extra damage delt after three hits";
+    String ins5 = "On the selection screen, be carful of overspending; if you do, you will be issued an overdraft fee, and lose any remaining funds.";
+    String ins6 = "Click the white boxes to start the selection. When all money is spent or towers placed, the game will start.";
+
+    fill(255);
+    textSize(15);
+    text(SSmessage, width/2, height/2);
+    text(ins, width/2, height/2);
+    text(ins1, width/2, height/2);
+    text(ins2, width/2, height/2);
+    text(ins3, width/2, height/2);
+    text(ins4, width/2, height/2);
+    text(ins5, width/2, height/2);
+    text(ins6, width/2, height/2);
+
+    fill(0);
+    if (!t.isStarted())
+      t.start();
+    if (ss.pressed() && t.isFinished()) {
+      ss.remove();
+      done = true;
+      print(done);
+    }
   }
   void makePlayMap() {
     //image(playScreen, 0, 0);

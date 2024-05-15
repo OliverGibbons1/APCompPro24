@@ -44,4 +44,10 @@ abstract class Tower {
   int getCost() {
     return cost;
   }
+  int getRange() {
+    return range;
+  }
+  int getDealy() {
+    return delay;
+  }
 }
