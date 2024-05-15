@@ -6,6 +6,7 @@
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
 // Map: extra/unused spots open up when more money is aquired?
 // Once finished, extract attack() into tower class (take out print checks)
+// SaveGame logic for saving towers?
 
 // Start screen message: description of each tower's special, descriptrion of enemy and levels. 
 //   Icetower will only work if no other special effect is invoked (burn != ice, mage != ice)
