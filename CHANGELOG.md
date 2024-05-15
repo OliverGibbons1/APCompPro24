@@ -30,3 +30,5 @@ Apr/19/2024 - ApplySpecial() images created and added.
 (Large break due to AP testing)
 
 May/13/2024 - Added Select class. Finished start-of-game tower selection logic. Boolean check for purchasing towers. Images added to start-of-game tower buttons. 
+
+May/14/2024 - Lots of work on specials for the towers. New timer logic (enemies can only be frozen if they are not already on fire or under mage control). Method in Enemy class to achieve this effect: hasSpecial().
