@@ -1,31 +1,35 @@
 class IceTower extends Tower {
-
   int freezeTime = 2000;
 
-  IceTower (float x, float y) {
-    super.delay = freezeTime;
-    super.x = x;
-    super.y = y;
-    super.cost = 100;
-    super.damage = 10;
-    super.range = 400;
-    super.tower = loadImage("towerImages/iceTower.png");
+  IceTower(float x, float y) {
+    this.x = x;
+    this.y = y;
+    this.cost = 100;
+    this.damage = 10;
+    this.range = 400;
+    this.delay = freezeTime;
+    this.tower = loadImage("towerImages/iceTower.png");
+    
+    // Initialize the fTimer after setting the delay
+    this.fTimer = new Timer(this.delay);
   }
 
   void attack(Enemy enemy) {
     enemy.health -= damage;
     tick++;
-    println(" attacked " + tick + " health " + enemy.health + " e.speed " + enemy.speed);
+    println("IceTower attacked, tick: " + tick + ", enemy health: " + enemy.health + ", enemy speed: " + enemy.speed);
   }
 
   void applySpecial(Enemy enemy) {
-    //TODO add ice picture over enemy to indicate frozen-ness
-    tick = 0;
-    fTimer.start();
-    enemy.freeze();
+    if (!enemy.hasSpecial()) {
+      tick = 0;
+      fTimer.start();
+      enemy.freeze();
+    }
   }
 
   void noSpecial(Enemy enemy) {
     enemy.unFreeze();
+    enemy.clearSpecial();
   }
 }

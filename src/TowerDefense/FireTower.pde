@@ -16,7 +16,7 @@ class FireTower extends Tower {
 
   void attack(Enemy enemy) {
     enemy.health -= damage;
-    println(" attacked. health " + enemy.health);
+    println("Fire attacked. health " + enemy.health);
     applySpecial(enemy);
   }
 

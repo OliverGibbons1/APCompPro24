@@ -1,9 +1,16 @@
 //Oliver Gibbons | March 2024
 
 // TO DO:
+// Order for special attacks (not a problem when the towers get spaced out and less range?)
 // make checks for enemy movement (recursive); make enemy movement;
 // MAP: finish extra tower spots; make variables in grid [] [] for different towers if needed
+// Map: extra/unused spots open up when more money is aquired?
 // Once finished, extract attack() into tower class (take out print checks)
+
+// Start screen message: description of each tower's special, descriptrion of enemy and levels. 
+//   Icetower will only work if no other special effect is invoked (burn != ice, mage != ice)
+//   Carful of overdraft fee
+//   Price of towers, range of towers, maybe extra screen for tower desc in infobar?
 
 private int money, round, life, enemyCount;
 Map m;
@@ -51,135 +58,141 @@ void setup() {
 }
 
 void draw() {
-  //General stuffs
+  // General setup
   rectMode(CENTER);
   textMode(CENTER);
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
-  //Startscreen-----------------------------------------------------------------------------------
+
+  // Start screen
   if (!play && first) {
-    // Display start screen elements
-    m.displaySSMap();
-    noFill();
-    stroke(0);
-    strokeWeight(2);
-    startButton.display();
-    quitButton.display();
-    loadGameButton.display();
-    clearSaveButton.display();
-
-    // Display start screen text
-    textSize(22);
-    text(s, startButton.x, startButton.y);
-    text(q, quitButton.x, quitButton.y);
-    text(l, loadGameButton.x, loadGameButton.y);
-    textSize(8);
-    text(c, clearSaveButton.x, clearSaveButton.y);
-    fill(0);
-
-    // Check for button presses
-    if (startButton.pressed()) {
-      play = true;
-      first = false;
-      s = s.equals(i) ? i:s;
-    }
-    if (loadGameButton.pressed()) {
-      play = true;
-      first = false;
-      saveGame = loadJSONObject("data/new.json");
-      savedGame = saveGame.getBoolean("savedGame");
-      if (savedGame) {
-        life = saveGame.getInt("life");
-        money = saveGame.getInt("money");
-        s = s.equals(i) ? i:s;
-      } else {
-        s = s.equals(i) ? i:s;
-        play = true;
-        first = false;
-      }
-    }
-    if (quitButton.pressed())
-      exit();
-    if (clearSaveButton.pressed())
-      clearSave();
+    displayStartScreen();
   }
-  //Start of play--------------------------------------------------------------------------------
+
+  // Play mode
   if (play) {
     m.displayPlayMap();
     infoBar();
+    handleTowersAndEnemies();
   }
 
-  if (!select.over() && play) {
-    select.display();
-    select.finalSelection();
-    for (Tower t : towers) {
-      t.display();
-    }
-  }
-
-  if (enemy.size() == 0 && select.over())
+  // Check for next round
+  if (enemy.isEmpty() && select.over()) {
     nextRoundHandle();
-
-  //Enemy stuffs: Count enemies passing Y, remove enemy if dead, attack enemy if in range, display
-  for (int j = enemy.size() - 1; j >= 0; j--) {
-    for (Tower t : towers) {
-      Enemy e = enemy.get(j);
-      e.display();
-      e.move();
-      t.display();
-
-      // attack if in range and if timer is finished
-      if (t.inRange(e)) {
-        if (!attackTimer.isStarted()) {
-          attackTimer.start();
-          println("Started");
-        } else if (attackTimer.isFinished()) {
-          // If attackTimer is finished, reset it and perform attack
-          attackTimer.start(); // Reset the timer
-          t.attack(e);
-        }
-      }
-
-      if (t.tick >= 3) {
-        t.applySpecial(e);
-      }
-
-      if (t.fTimer.isStarted() && t.fTimer.isFinished())
-        t.noSpecial(e);
-      if (t.mageTimer.isStarted() && t.mageTimer.isFinished())
-        t.noSpecial(e);
-      if (t.fireTimer.isStarted() && t.fireTimer.isFinished())
-        t.noSpecial(e);
-      if (t.burnTimer.isStarted() && !t.fireTimer.isFinished())
-        t.burn(e);
-      if (!e.l()) {
-        println("removed ");
-        money += e.rewardMoney;
-        eToRemove.add(e);
-      }
-
-      //Counting
-      if (e.passX()) {
-        println("Pass X");
-        enemyCount++;
-        life -= enemyCount; //ToDo health -= enemy.y like rocks;
-        eToRemove.add(e);
-      }
-
-      // Remove marked enemies
-      for (Enemy en : eToRemove) {
-        enemy.remove(en);
-      }
-      eToRemove.clear();
-    }
   }
 
-  //Game Over logic
+  // Game over logic
   if (checkGameOver()) {
     m.displayEndMap();
     play = false;
   }
 }
+
+void displayStartScreen() {
+  // Display start screen elements
+  m.displaySSMap();
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  startButton.display();
+  quitButton.display();
+  loadGameButton.display();
+  clearSaveButton.display();
+
+  // Display start screen text
+  textSize(22);
+  text(s, startButton.x, startButton.y);
+  text(q, quitButton.x, quitButton.y);
+  text(l, loadGameButton.x, loadGameButton.y);
+  textSize(8);
+  text(c, clearSaveButton.x, clearSaveButton.y);
+  fill(0);
+
+  // Check for button presses
+  if (startButton.pressed()) {
+    play = true;
+    first = false;
+  }
+  if (loadGameButton.pressed()) {
+    play = true;
+    first = false;
+    saveGame = loadJSONObject("data/new.json");
+    savedGame = saveGame.getBoolean("savedGame");
+    if (savedGame) {
+      life = saveGame.getInt("life");
+      money = saveGame.getInt("money");
+    }
+  }
+  if (quitButton.pressed()) {
+    exit();
+  }
+  if (clearSaveButton.pressed()) {
+    clearSave();
+  }
+}
+
+void handleTowersAndEnemies() {
+  select.display();
+  select.finalSelection();
+  
+  if (money < 0)
+    money = 0;
+
+  for (Tower t : towers) {
+    t.display();
+  }
+
+  eToRemove.clear();
+
+  for (int j = enemy.size() - 1; j >= 0; j--) {
+    Enemy e = enemy.get(j);
+    e.display();
+    e.move();
+
+    for (Tower t : towers) {
+      t.display();
+
+      if (t.inRange(e)) {
+        if (!t.attackTimer.isStarted()) {
+          t.attackTimer.start();
+        } else if (t.attackTimer.isFinished()) {
+          t.attackTimer.start();
+          t.attack(e);
+        }
+
+        if (t.tick >= 3) {
+          t.applySpecial(e);
+        }
+
+        if (t.fTimer != null && t.fTimer.isStarted() && t.fTimer.isFinished()) {
+          t.noSpecial(e);
+        }
+        if (t.mageTimer.isStarted() && t.mageTimer.isFinished())
+          t.noSpecial(e);
+        if (t.fireTimer.isStarted() && t.fireTimer.isFinished())
+          t.noSpecial(e);
+        if (t.burnTimer.isStarted() && !t.fireTimer.isFinished())
+          t.burn(e);
+      }
+    }
+
+    if (!e.l()) {
+      money += e.rewardMoney;
+      eToRemove.add(e);
+    }
+
+    if (e.passX()) {
+      enemyCount++;
+      life -= enemyCount;
+      eToRemove.add(e);
+    }
+  }
+
+  enemy.removeAll(eToRemove);
+}
+
+
+
 
 void nextRoundHandle() {
   nextRound.x = mapWidth / 2;
@@ -189,11 +202,8 @@ void nextRoundHandle() {
   nextRound.display();
   fill(0);
   String nr = "Click for Next Round";
-  text(nr, height / 2, width / 2);
+  text(nr, mapHeight / 2, mapWidth / 2);
   if (nextRound.pressed()) {
-    println("New Round");
-    nextRound.remove();
-    nr = nr.equals(i) ? i:nr;
     round++;
     nextRound(round);
   }

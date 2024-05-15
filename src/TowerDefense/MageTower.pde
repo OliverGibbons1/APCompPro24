@@ -16,7 +16,7 @@ class MageTower extends Tower {
   void attack(Enemy enemy) {
     enemy.health -= damage;
     tick++;
-    println(" attacked " + tick + " health " + enemy.health + " damage " + damage);
+    println("Mage attack " + tick + " health " + enemy.health + " damage " + damage);
   }
 
   void applySpecial(Enemy enemy) {

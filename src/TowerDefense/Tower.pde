@@ -1,19 +1,16 @@
 abstract class Tower {
-
-  protected int cost, range, damage;
+  protected int cost, range, damage, delay;
   protected float x, y;
-  int tick, delay;
+  int tick;
   PImage tower;
-  boolean attack;
   Enemy e;
-  Timer fTimer, mageTimer, fireTimer, burnTimer;
+  Timer attackTimer, fTimer, mageTimer, fireTimer, burnTimer;
 
-  Tower () {
+  Tower() {
     tick = 0;
-    attack = false;
     e = new Enemy();
-    this.delay = delay;
-    fTimer = new Timer(delay);
+    attackTimer = new Timer(1000); // Each tower has its own attack timer
+    fTimer = null; // Initialize as null, set it later in the subclass
     mageTimer = new Timer(2000);
     fireTimer = new Timer(10000);
     burnTimer = new Timer(500);
