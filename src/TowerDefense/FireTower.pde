@@ -10,7 +10,7 @@ class FireTower extends Tower {
     super.y = y;
     super.cost = 200;
     super.damage = 10;
-    super.range = 400;
+    super.range = 200;
     super.tower = loadImage("towerImages/fireTower.png");
   }
 

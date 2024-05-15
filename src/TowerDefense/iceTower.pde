@@ -6,7 +6,7 @@ class IceTower extends Tower {
     this.y = y;
     this.cost = 100;
     this.damage = 10;
-    this.range = 400;
+    this.range = 200;
     this.delay = freezeTime;
     this.tower = loadImage("towerImages/iceTower.png");
     
