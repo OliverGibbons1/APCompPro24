@@ -11,7 +11,7 @@ The project is a tower defense game; the concepts being implemented include abst
 
 [Source Code](https://github.com/OliverGibbons1/APCompPro24/tree/main/src/TowerDefense)
 
-![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/FinalProject(finished).drawio.png) 
+![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/FinalProject(finished).drawio.png?raw=true) 
 
 Here is the game running: images are, in order, start screen, tower selection screen, next round capture, and gameplay capture.
 
