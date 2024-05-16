@@ -17,4 +17,8 @@ This will be the final for the AP Computer Programming course. It will entail 30
 
 The project is a tower defense game; the concepts being implemented include abstract classes, class hierarchy, multidimensional arrays, enhanced for-loops, GUI, ternary statements, and lots of collections. There will be comments scattered throughout the code (and extensive encapsulation) to help readability. 
 
+[Changelog](https://github.com/OliverGibbons1/APCompPro24/blob/main/CHANGELOG.md)
+
+[Source Code](https://github.com/OliverGibbons1/APCompPro24/tree/main/src/TowerDefense)
+
 ![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/FinalProject(finished).drawio.png) 
