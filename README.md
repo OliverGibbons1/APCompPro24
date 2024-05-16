@@ -15,13 +15,13 @@ The project is a tower defense game; the concepts being implemented include abst
 
 Here is the game running: images are, in order, start screen, tower selection screen, next round capture, and gameplay capture.
 
-![StartScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/src/TowerDefense/towerImages/startscreen.png) 
+![StartScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/src/TowerDefense/towerImages/startscreen.png?raw=true) 
 
-![SelectionScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/Selection.png) 
+![SelectionScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/Selection.png?raw=true) 
 
-![NextRoundScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/NextRound.png) 
+![NextRoundScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/NextRound.png?raw=true) 
 
-![FrozenEnemyScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/Frozen.png)
+![FrozenEnemyScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/Frozen.png?raw=true)
 
 ## Hangman clone
 
