@@ -1,6 +1,18 @@
 # APCompPro24
 This is Oliver Gibbons's portfolio for the 2023-24 AP computer programming course offered at Skyline. 
 
+# Individual Project 
+This will be the final for the AP Computer Programming course. It will entail 30+ hours of work and will include advanced programming concepts. 
+
+The project is a tower defense game; the concepts being implemented include abstract classes, class hierarchy, multidimensional arrays, enhanced for-loops, GUI, ternary statements, and lots of collections. There will be comments scattered throughout the code (and extensive encapsulation) to help readability. 
+
+[Changelog](https://github.com/OliverGibbons1/APCompPro24/blob/main/CHANGELOG.md)
+
+[Source Code](https://github.com/OliverGibbons1/APCompPro24/tree/main/src/TowerDefense)
+
+![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/FinalProject(finished).drawio.png) 
+
+
 ## Hangman clone
 
 A hangman clone in a command line environment.
@@ -12,9 +24,3 @@ A hangman clone in a command line environment.
 [Source Code](https://github.com/OliverGibbons1/APCompPro24/blob/main/src/Hangman.md/main.java)
 
 
-# Individual Project 
-This will be the final for the AP Computer Programming course. It will entail 30+ hours of work and will include advanced programming concepts. 
-
-The project is a tower defense game; the concepts being implemented include abstract classes, class hierarchy, multidimensional arrays, enhanced for-loops, GUI, ternary statements, and lots of collections. There will be comments scattered throughout the code (and extensive encapsulation) to help readability. 
-
-![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/individualProject.jpg?raw=true) 
