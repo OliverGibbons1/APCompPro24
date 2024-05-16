@@ -1,5 +1,5 @@
 # APCompPro24
-This is Oliver Gibbons's portfolio for the 2023-24 AP computer programming course offered at Skyline. This repo only contains solo projects, but group projects can be found here: 
+This is Oliver Gibbons's portfolio for the 2023-24 AP computer programming course offered at Skyline. This repo only contains solo projects, but group projects for 2024 can be found here: 
 [Group portfolio](https://github.com/OliverGibbons1/APCompPro24Group)
 
 # Individual Project 
