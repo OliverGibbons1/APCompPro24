@@ -20,7 +20,7 @@ class Map {
     lastRow = grid.length - 1;
     lastCol = grid[0].length - 1;
     done = false;
-    t = new Timer(500);
+    t = new Timer(100);
   }
 
   void displaySSMap() {
@@ -40,19 +40,19 @@ class Map {
     String ins2 = "Ice Tower: range - " + i.getRange() + " cost - " + i.getCost() + " special - freeze for 2 sec"; //+ i.getDelay();
     String ins3 = "Fire Tower: range - " + f.getRange() + " cost - " + f.getCost() + " special - burn for 5 damage every 1/2 sec for 10 sec";
     String ins4 = "Mage Tower: range - " + m.getRange() + " cost - " + m.getCost() + " special - extra damage delt after three hits";
-    String ins5 = "On the selection screen, be carful of overspending; if you do, you will be issued an overdraft fee, and lose any remaining funds.";
-    String ins6 = "Click the white boxes to start the selection. When all money is spent or towers placed, the game will start.";
+    String ins5 = "Be carful of overspending; an overdraft fee will be issued resulting in a loss of any remaining funds.";
+    String ins6 = "The white boxes start selection. When all money is spent or towers placed, the game will start.";
 
     fill(255);
     textSize(15);
-    text(SSmessage, width/2, height/2);
-    text(ins, width/2, height/2);
-    text(ins1, width/2, height/2);
-    text(ins2, width/2, height/2);
-    text(ins3, width/2, height/2);
-    text(ins4, width/2, height/2);
-    text(ins5, width/2, height/2);
-    text(ins6, width/2, height/2);
+    text(SSmessage, width/2,72);
+    text(ins, width/2, 142);
+    text(ins1, width/2, 213);
+    text(ins2, width/2, 284);
+    text(ins3, width/2, 355);
+    text(ins4, width/2, 426);
+    text(ins5, width/2, 497);
+    text(ins6, width/2, 568);
 
     fill(0);
     if (!t.isStarted())

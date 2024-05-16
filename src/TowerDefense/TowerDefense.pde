@@ -76,7 +76,7 @@ void draw() {
   if (play && ss) {
     m.instructions();
     if (m.done && m.t.isFinished()) {
-      println("finished");
+      println(" finished");
       ss = false;
     }
   }

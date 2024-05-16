@@ -1,7 +1,7 @@
 class Timer {
 
-  int savedTime; // When Timer started
-  int totalTime; // How long Timer should last
+  int savedTime; 
+  int totalTime;
   boolean started;
 
   Timer(int last) {

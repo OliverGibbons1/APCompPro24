@@ -4,7 +4,7 @@ class Enemy {
   PImage enemy;
   Map m;
   boolean frozen;
-  String currentSpecial; // Track current special effect
+  String currentSpecial;
 
   Enemy() {
     x = 100;
