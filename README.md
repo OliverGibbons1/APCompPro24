@@ -12,6 +12,15 @@ The project is a tower defense game; the concepts being implemented include abst
 
 ![Class Diagram](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/FinalProject(finished).drawio.png) 
 
+Here is the game running:
+
+![StartScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/src/TowerDefense/towerImages/startscreen.png) 
+
+![SelectionScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/Selection.png) 
+
+![NextRoundScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/NextRound.png) 
+
+![FrozenEnemyScreen](https://github.com/OliverGibbons1/APCompPro24/blob/main/images/RunningApp/Frozen.png)
 
 ## Hangman clone
 
