@@ -5,7 +5,7 @@ This is Oliver Gibbons's portfolio for the 2023-24 AP computer programming cours
 # Individual Project 
 This will be the final for the AP Computer Programming course. It will entail 30+ hours of work and will include advanced programming concepts. 
 
-The project is a tower defense game; the concepts being implemented include abstract classes, class hierarchy, multidimensional arrays, enhanced for-loops, GUI, ternary statements, and lots of collections. There will be comments scattered throughout the code (and extensive encapsulation) to help readability. 
+The project is a tower defense game; the concepts being implemented include abstract classes, class hierarchy, multidimensional arrays, enhanced for-loops, GUI, ternary statements, and lots of collections. There will be comments scattered throughout the code (and extensive encapsulation) to help readability. This code runs in processing.
 
 [Changelog](https://github.com/OliverGibbons1/APCompPro24/blob/main/CHANGELOG.md)
 
