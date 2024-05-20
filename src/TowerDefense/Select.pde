@@ -128,29 +128,3 @@ class Select {
     }
   }
 }
-
-
-// Reference just in case
-//if (t2Pressed) {
-//  if (fireSelect.pressed()) {
-//    Tower fireTower = new FireTower(currentButtonX, currentButtonY);
-//    towers.add(fireTower);
-//    t2Pressed = false;
-//    t2.remove();
-//    count++;
-//  }
-//  if (mageSelect.pressed()) {
-//    Tower mageTower = new MageTower(currentButtonX, currentButtonX);
-//    towers.add(mageTower);
-//    t2Pressed = false;
-//    t2.remove();
-//    count++;
-//  }
-//  if (iceSelect.pressed()) {
-//    Tower iceTower = new IceTower(currentButtonX, currentButtonX);
-//    towers.add(iceTower);
-//    t2Pressed = false;
-//    t2.remove();
-//    count++;
-//  }
-//}
